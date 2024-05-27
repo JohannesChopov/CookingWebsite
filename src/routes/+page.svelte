@@ -13,6 +13,7 @@
 <p> Lorem Ipsum. </p>
 
 <a href="/about">About</a>
+<a href="/recipes">Recipes</a>
 
 <h2> Dit is een voorbeeld website </h2>
 
