@@ -1,4 +1,8 @@
 <script>
+
+    import {supabase} from "../supabase.js";
+    console.log(supabase);
+
     let user = 'Johannes';
 </script>
 
@@ -14,11 +18,7 @@
 
 <a href="/about">About</a>
 <a href="/recipes">Recipes</a>
+<a href="/login">Login</a>
+<a href="/profile">Profile</a>
 
 <h2> Dit is een voorbeeld website </h2>
-
-<style>
-    h1, h2 {
-        color: blue;   
-    }
-</style>

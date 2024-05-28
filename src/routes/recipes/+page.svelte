@@ -7,6 +7,8 @@
     <title>Recipes</title>
 </svelte:head>
 
+<a href="/">Home</a>
+
 <h1>Recipes</h1>
 
 <ul>
@@ -20,7 +22,7 @@
     {/each}
 </ul>
 
-<a href="/">Home</a>
+
 
 <style>
     h1, h2 {

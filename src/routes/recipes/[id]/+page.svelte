@@ -1,5 +1,5 @@
 <script>
-    import Recipe from '$lib/components/Character.svelte'
+    import Recipe from '$lib/components/Recipe.svelte'
     export let data;
     $: recipe = data?.recipe;
 </script>

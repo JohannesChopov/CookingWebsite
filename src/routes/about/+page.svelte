@@ -1,3 +1,5 @@
+<a href="/">Home</a>
+
 <h1> About </h1>
 
 <svelte:head>
@@ -5,4 +7,3 @@
 </svelte:head>
 
 
-<a href="/">Home</a>
