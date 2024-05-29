@@ -1,10 +1,35 @@
-<script>
-    import { supabase } from '$lib/supabase';
+<script lang="ts">
+    import { createClient } from '@supabase/supabase-js'
+    import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from "$env/static/public";
+    import { onMount } from 'svelte';
+    
+    const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY)
+    console.log(supabase)
+
+    let user: any;
+
     let email = "";
+    
     let password = "";
     let confirmPass = "";
     let error = "";
     let isRegistering = false;
+
+    /*
+    const signInWithPassword = async () => {
+        const {user, error} = await supabase.auth.signInWithPassword({ email, password });
+        console.log(user, error);
+    }
+    */
+    const signOut = () => {
+        supabase.auth.signOut();
+    };
+
+    onMount(() => {
+        supabase.auth.onAuthStateChange((event, session) => {
+            user = session?.user;
+        })
+    })
 
     const handleAuth = async (event) => {
         event.preventDefault();
@@ -43,8 +68,43 @@
     };
 </script>
 
+{#if user}
+    <p>Signed in as {user.email}</p>
+    <button on:click={signOut}>{'SignOut'}</button>
+{:else}
+    <div class="authContainer">
+        <form on:submit|preventDefault={handleAuth}>
+            <h1>{isRegistering ? 'Register' : 'Login'}</h1>
+            {#if error}
+                <p class="error">{error}</p>
+            {/if}
+            <label>
+                <input bind:value={email} type="email" placeholder="Email" required />
+            </label>
+            <label>
+                <input bind:value={password} type="password" placeholder="Password" required />
+            </label>
+
+            {#if isRegistering}
+                <label>
+                    <input bind:value={confirmPass} type="password" placeholder="Confirm Password" required />
+                </label>
+            {/if}
+            <button type="submit">{isRegistering ? 'Register' : 'Login'}</button>
+            <p>
+                {#if isRegistering}
+                    Already have an account? <a href="javascript:void(0)" on:click={toggleAuthMode}>Login</a>
+                {:else}
+                    Don't have an account? <a href="javascript:void(0)" on:click={toggleAuthMode}>Register</a>
+                {/if}
+            </p>
+        </form>
+    </div>
+{/if}
+
+<!--
 <div class="authContainer">
-    <form on:submit={handleAuth}>
+    <form on:submit|preventDefault={signInWithMagicLink}>
         <h1>{isRegistering ? 'Register' : 'Login'}</h1>
         {#if error}
             <p class="error">{error}</p>
@@ -52,9 +112,7 @@
         <label>
             <input bind:value={email} type="email" placeholder="Email" required />
         </label>
-        <label>
-            <input bind:value={password} type="password" placeholder="Password" required />
-        </label>
+        
         {#if isRegistering}
             <label>
                 <input bind:value={confirmPass} type="password" placeholder="Confirm Password" required />
@@ -69,8 +127,9 @@
             {/if}
         </p>
     </form>
+    <button on:click={signOut}>{'SignOut'}</button>
 </div>
-
+-->
 <style>
     .authContainer {
         display: flex;
