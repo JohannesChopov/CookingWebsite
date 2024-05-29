@@ -38,7 +38,7 @@ export const load = async ({ fetch }) => {
 };
 */
 
-const API = 'https://www.themealdb.com/api/json/v1/1/search.php?f=b';
+const API = 'https://www.themealdb.com/api/json/v1/1/search.php?f=c';
 
 export const load = async ({ fetch }) => {
     const response = await fetch(API);

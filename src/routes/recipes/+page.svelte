@@ -11,21 +11,56 @@
 
 <h1>Recipes</h1>
 
-<ul>
+<div class="recipes-grid">
     {#each recipes as {strMeal, idMeal, strMealThumb}}
-        <li>
+        <div class="recipe-card">
             <a href={`/recipes/${idMeal}`}>
-                {strMeal}
-                <img src={strMealThumb} alt={strMeal} width="50" />
+                <img src={strMealThumb} alt={strMeal} class="recipe-image" />
+                <div class="recipe-name">{strMeal}</div>
             </a>
-        </li>
+        </div>
     {/each}
-</ul>
+</div>
 
-
-
+<!--
 <style>
-    h1, h2 {
-        color: blue;   
+    .recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.recipe-card {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+}
+
+.recipe-image {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.recipe-name {
+    padding: 16px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 600px) {
+    .recipe-name {
+        font-size: 1rem;
     }
+}
 </style>
+-->

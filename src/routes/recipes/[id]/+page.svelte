@@ -11,9 +11,3 @@
 <Recipe {...recipe}/>
 
 <a href="/recipes">Recipes</a>
-
-<style>
-    h1, h2 {
-        color: blue;   
-    }
-</style>
