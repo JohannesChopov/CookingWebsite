@@ -27,6 +27,7 @@
         }
     };
 
+    
     // Listen for auth state changes
     onMount(() => {
         const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
@@ -38,6 +39,12 @@
             authListener.unsubscribe();
         };
     });
+    
+    onMount(async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        user = session?.user || null;
+    });
+    
 
     const handleAuth = async (event) => {
         event.preventDefault();
