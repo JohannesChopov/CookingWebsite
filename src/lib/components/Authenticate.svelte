@@ -2,8 +2,9 @@
     import { createClient } from '@supabase/supabase-js'
     import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from "$env/static/public";
     import { onMount } from 'svelte';
-    
-    const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY)
+    import { supabase } from '$lib/supabase';
+
+    /*const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY)*/
     console.log(supabase)
 
     let user: any;
@@ -15,21 +16,28 @@
     let error = "";
     let isRegistering = false;
 
-    /*
-    const signInWithPassword = async () => {
-        const {user, error} = await supabase.auth.signInWithPassword({ email, password });
-        console.log(user, error);
-    }
-    */
-    const signOut = () => {
-        supabase.auth.signOut();
+    // Sign out function
+    const signOut = async () => {
+        const { error: signOutError } = await supabase.auth.signOut();
+        if (signOutError) {
+            console.error('Error logging out:', signOutError);
+        } else {
+            user = null;
+            window.location.href = "/login";
+        }
     };
 
+    // Listen for auth state changes
     onMount(() => {
-        supabase.auth.onAuthStateChange((event, session) => {
-            user = session?.user;
-        })
-    })
+        const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+            user = session?.user || null;
+        });
+
+        // Clean up listener on component unmount
+        return () => {
+            authListener.unsubscribe();
+        };
+    });
 
     const handleAuth = async (event) => {
         event.preventDefault();
@@ -55,7 +63,7 @@
             error = authError.message;
         } else {
             // Redirect or perform further actions after successful auth
-            window.location.href = "/profile";
+            window.location.href = "/";
         }
     };
 
