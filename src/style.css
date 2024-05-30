@@ -39,10 +39,12 @@
 
 .layout-header {
     font-size: 50px;
-    background-color: blueviolet;
+    background-color: white;
+    color: green;
 }
 
 .layout-footer {
     font-size: 50px;
-    background-color: blueviolet;
+    background-color: darkgreen;
+    color: white;
 }

@@ -1,13 +1,19 @@
 <div class="mainContainer">
-    <header class="layout-header">Header</header>
+    <header class="layout-header">
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/recipes">Recipes</a>
+            <a href="/login">Profile</a>
+        </nav>
+    </header>
     <slot/>
-    <footer class="layout-footer">Footer</footer>
+    <footer class="layout-footer">Extra info</footer>
 </div>
-
 
 <script>
     import '../style.css';
-    
+
     import {invalidate} from '$app/navigation'
     import {onMount} from 'svelte'
     /*import { supabase } from '$lib/supabase';*/
