@@ -15,9 +15,14 @@
 
     onMount(async () => {
         const { data: { session } } = await supabase.auth.getSession();
-        let user = session?.user || null;
-        user_id = user?.id
-        console.log(user_id)
+        if (session?.user) {
+            user_id = session.user.id;
+            console.log(user_id);
+        } else {
+            console.error('User not logged in');
+            // Handle the case when there is no session or user
+            user_id = null; // or any appropriate default action
+        }
     });
 
     const addRecipe = async () => {
