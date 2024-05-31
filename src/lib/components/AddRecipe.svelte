@@ -7,7 +7,7 @@
     let ingredients = '';
     let instructions = '';
     let image = null;
-    let user_id = 1; // Example user ID, replace with actual logged-in user ID
+    let user_id = null; // Example user ID, replace with actual logged-in user ID
 
     const handleFileChange = (event) => {
         image = event.target.files[0];
@@ -17,17 +17,26 @@
         const { data: { session } } = await supabase.auth.getSession();
         let user = session?.user || null;
         user_id = user?.id
+        console.log(user_id)
     });
 
     const addRecipe = async () => {
-        let imageUrl = null;
+        let image_url = null;
         if (image) {
-            const { data, error } = await supabase.storage.from('recipe-images').upload(`public/${image.name}`, image);
+
+            const filePath = `public/${image.name}`
+            const file = image
+
+            const { data, error } = await supabase.storage.from('recipe-images').upload(filePath, file);
+            /*location.reload();*/
             if (error) {
                 console.error('Error uploading image:', error);
                 return;
             }
-            imageUrl = data.Key;
+            const { data: url } = supabase.storage.from('recipe-images').getPublicUrl(filePath);
+
+            console.log(url.publicUrl)
+            image_url = url.publicUrl;
         }
 
         const { error } = await supabase.from('recipes').insert([
@@ -37,15 +46,15 @@
                 description,
                 ingredients,
                 instructions,
-                image_url: imageUrl
+                image_url
             }
         ]);
 
         if (error) {
             console.error('Error adding recipe:', error);
         } else {
-            // Redirect to recipe list or show success message
-            console.log("recipe added")
+            console.log("Recipe added");
+            window.location.reload();
         }
     };
 </script>
