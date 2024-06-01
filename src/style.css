@@ -32,6 +32,24 @@
     color: black;
 }
 
+.logout {
+    align-self: center;
+}
+
+.delete-button {
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.delete-button:hover {
+    background: darkred;
+}
+
 @media (max-width: 600px) {
     .recipe-name {
         font-size: 1rem;

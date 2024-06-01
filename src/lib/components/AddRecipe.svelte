@@ -72,3 +72,50 @@
     <input type="file" on:change={handleFileChange} />
     <button type="submit">Add Recipe</button>
 </form>
+
+<style>
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    textarea {
+        height: 100px;
+        overflow: auto;
+        resize: none;
+    }
+
+    input[type="file"] {
+        font-size: 1rem;
+    }
+
+    button {
+        background-color: #28a745;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+</style>

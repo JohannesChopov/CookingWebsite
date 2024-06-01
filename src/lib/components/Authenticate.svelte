@@ -8,9 +8,9 @@
     console.log(supabase)
 
     let user: any;
+    let loading = true;
 
     let email = "";
-    
     let password = "";
     let confirmPass = "";
     let error = "";
@@ -26,12 +26,12 @@
             window.location.href = "/login";
         }
     };
-
     
     // Listen for auth state changes
     onMount(() => {
         const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
             user = session?.user || null;
+            loading = false;
         });
         
         // Clean up listener on component unmount
@@ -43,6 +43,7 @@
     onMount(async () => {
         const { data: { session } } = await supabase.auth.getSession();
         user = session?.user || null;
+        loading = false;
     });
     
 
@@ -83,68 +84,46 @@
     };
 </script>
 
-{#if user}
-    <p>Signed in as {user.email}</p>
-    <button on:click={signOut}>{'SignOut'}</button>
+{#if loading}
+    <p>Loading...</p>
 {:else}
-    <div class="authContainer">
-        <form on:submit|preventDefault={handleAuth}>
-            <h1>{isRegistering ? 'Register' : 'Login'}</h1>
-            {#if error}
-                <p class="error">{error}</p>
-            {/if}
-            <label>
-                <input bind:value={email} type="email" placeholder="Email" required />
-            </label>
-            <label>
-                <input bind:value={password} type="password" placeholder="Password" required />
-            </label>
-
-            {#if isRegistering}
-                <label>
-                    <input bind:value={confirmPass} type="password" placeholder="Confirm Password" required />
-                </label>
-            {/if}
-            <button type="submit">{isRegistering ? 'Register' : 'Login'}</button>
-            <p>
-                {#if isRegistering}
-                    Already have an account? <a href="javascript:void(0)" on:click={toggleAuthMode}>Login</a>
-                {:else}
-                    Don't have an account? <a href="javascript:void(0)" on:click={toggleAuthMode}>Register</a>
+    {#if user}
+        <div class="authContainer">
+            <p>Signed in as {user.email}</p>
+            <button class="logout" on:click={signOut}>{'SignOut'}</button>
+        </div>
+    {:else}
+        <div class="authContainer">
+            <form on:submit|preventDefault={handleAuth}>
+                <h1>{isRegistering ? 'Register' : 'Login'}</h1>
+                {#if error}
+                    <p class="error">{error}</p>
                 {/if}
-            </p>
-        </form>
-    </div>
+                <label>
+                    <input bind:value={email} type="email" placeholder="Email" required />
+                </label>
+                <label>
+                    <input bind:value={password} type="password" placeholder="Password" required />
+                </label>
+
+                {#if isRegistering}
+                    <label>
+                        <input bind:value={confirmPass} type="password" placeholder="Confirm Password" required />
+                    </label>
+                {/if}
+                <button type="submit">{isRegistering ? 'Register' : 'Login'}</button>
+                <p>
+                    {#if isRegistering}
+                        Already have an account? <a href="javascript:void(0)" on:click={toggleAuthMode}>Login</a>
+                    {:else}
+                        Don't have an account? <a href="javascript:void(0)" on:click={toggleAuthMode}>Register</a>
+                    {/if}
+                </p>
+            </form>
+        </div>
+    {/if}
 {/if}
 
-<!--
-<div class="authContainer">
-    <form on:submit|preventDefault={signInWithMagicLink}>
-        <h1>{isRegistering ? 'Register' : 'Login'}</h1>
-        {#if error}
-            <p class="error">{error}</p>
-        {/if}
-        <label>
-            <input bind:value={email} type="email" placeholder="Email" required />
-        </label>
-        
-        {#if isRegistering}
-            <label>
-                <input bind:value={confirmPass} type="password" placeholder="Confirm Password" required />
-            </label>
-        {/if}
-        <button type="submit">{isRegistering ? 'Register' : 'Login'}</button>
-        <p>
-            {#if isRegistering}
-                Already have an account? <a href="javascript:void(0)" on:click={toggleAuthMode}>Login</a>
-            {:else}
-                Don't have an account? <a href="javascript:void(0)" on:click={toggleAuthMode}>Register</a>
-            {/if}
-        </p>
-    </form>
-    <button on:click={signOut}>{'SignOut'}</button>
-</div>
--->
 <style>
     .authContainer {
         display: flex;
