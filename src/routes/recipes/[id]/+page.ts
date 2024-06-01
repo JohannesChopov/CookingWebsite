@@ -42,6 +42,8 @@ export const load = async ({ fetch }) => {
 };
 */
 
+
+/*
 const API = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
 
 export const load = async ({ fetch, params }) => {
@@ -64,5 +66,5 @@ export const load = async ({ fetch, params }) => {
         recipe
     };
 };
-
+*/
 

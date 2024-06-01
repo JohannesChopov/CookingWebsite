@@ -9,6 +9,4 @@
 
 <AddRecipe/>
 
-<RecipeFeed/>
-
 <UserRecipeFeed/>

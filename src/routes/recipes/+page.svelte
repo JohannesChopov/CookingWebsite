@@ -1,8 +1,14 @@
 <script>
     import RecipeFeed from "$lib/components/RecipeFeed.svelte";
+    export let data;
+    $: recipes = data?.recipes;
 </script>
 
 <RecipeFeed/>
+
+<svelte:head>
+    <title>Recipes</title>
+</svelte:head>
 
 <!--
 <script>
