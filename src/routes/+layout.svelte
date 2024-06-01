@@ -3,8 +3,8 @@
         <nav>
             <a href="/">Home</a>
             <a href="/about">About</a>
-            <a href="/recipes">Recipes</a>
-            <a href="/login">Profile</a>
+            <a href="/recipes" >Recipes</a>
+            <a href="/login" data-sveltekit-preload-data>Profile</a>
         </nav>
     </header>
     <slot/>
@@ -17,8 +17,6 @@
     import {invalidate} from '$app/navigation'
     import {onMount} from 'svelte'
     /*import { supabase } from '$lib/supabase';*/
-
-    
 
     export let data
     
@@ -40,6 +38,7 @@
         user = session?.user || null;
     });
 
+    
 </script>
 
 <style>

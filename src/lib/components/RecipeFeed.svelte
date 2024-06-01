@@ -2,10 +2,12 @@
     import { onMount } from 'svelte';
     import { supabase } from '$lib/supabase';
 
-    let recipes = [];
+    
+    export let recipes = [];
 
     console.log('test');
-
+    console.log(recipes);
+    /*
     onMount(async () => {
         // Fetch recipes along with the creator's email
         const { data, error } = await supabase
@@ -19,16 +21,17 @@
             console.log(data);
         }
     });
+    */
 </script>
 
 <div class="recipes-grid">
-    {#each recipes as { title, description, image_url, users }}
+    {#each recipes as { id, title, description, image_url, user }}
             <div class="recipe-card">
-                <a href={`src\routes\recipes\${id}`}>
+                <a href={`/recipes/${id}`}>
                     <img class="recipe-image" src={image_url} alt={title} />
                     <div class="recipe-name">{title}</div>
                     <p>{description}</p>
-                    <p>Creator: {users.email}</p>
+                    <p>Creator: {user.email}</p>
                 </a>
             </div>
     {/each}
