@@ -5,7 +5,7 @@
     import { supabase } from '$lib/supabase';
 
     /*const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY)*/
-    console.log(supabase)
+    //console.log(supabase)
 
     let user: any;
     let loading = true;

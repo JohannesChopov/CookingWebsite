@@ -17,7 +17,7 @@
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
             user_id = session.user.id;
-            console.log(user_id);
+            //console.log(user_id);
         } else {
             console.error('User not logged in');
             // Handle the case when there is no session or user
@@ -29,7 +29,7 @@
         let image_url = null;
         if (image) {
 
-            const filePath = `public/${image.name}`
+            const filePath = `public/${title}`
             const file = image
 
             const { data, error } = await supabase.storage.from('recipe-images').upload(filePath, file);
@@ -40,7 +40,7 @@
             }
             const { data: url } = supabase.storage.from('recipe-images').getPublicUrl(filePath);
 
-            console.log(url.publicUrl)
+            //console.log(url.publicUrl)
             image_url = url.publicUrl;
         }
 
@@ -102,6 +102,7 @@
 
     input[type="file"] {
         font-size: 1rem;
+        color: black;
     }
 
     button {

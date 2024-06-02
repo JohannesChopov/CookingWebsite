@@ -21,26 +21,56 @@
                 console.error('Error fetching recipes:', error);
             } else {
                 recipes = data;
-                console.log(data);
+                //console.log(data);
             }
         } else {
             console.error('User not logged in');
         }
     });
 
-    const deleteRecipe = async (recipeId) => {
-        const { error } = await supabase
+    const deleteRecipe = async (recipeId, imageUrl) => {
+        const {data, error: searchError} = await supabase
             .from('recipes')
-            .delete()
-            .eq('id', recipeId);
+            .select('title')
+            .eq('id', recipeId)
+            .single();
+        
+            console.log('Recipe found');
+            console.log(data?.title);
 
-        if (error) {
-            console.error('Error deleting recipe:', error);
+        if (searchError) {
+            console.error('Error searching image:', searchError)
         } else {
-            console.log('Recipe deleted');
-            // Update the recipes list to reflect the deletion
-            recipes = recipes.filter(recipe => recipe.id !== recipeId);
+
+            const name = data.title
+            
+            const { error: imageError } = await supabase.storage
+                .from('recipe-images')
+                .remove(`public/${name}`);
+                
+            if (imageError) {
+                console.error('Error deleting image:', imageError);
+            } else {
+
+                const { error: recipeError  } = await supabase
+                    .from('recipes')
+                    .delete()
+                    .eq('id', recipeId);
+
+                    console.log('Recipe deleted');
+
+                if (recipeError) {
+                    console.error('Error deleting recipe:', recipeError);
+                } else {
+                    console.log('Recipe and image deleted');
+                    // Update the recipes list to reflect the deletion
+                    recipes = recipes.filter(recipe => recipe.id !== recipeId);
+                }
+
+            }
+
         }
+        
     };
 
 </script>
@@ -52,7 +82,7 @@
             <div class="recipe-name">{title}</div>
             <p>{title}</p>
             <p>{description}</p>
-            <button on:click={() => deleteRecipe(id)} class="delete-button">Remove</button>
+            <button on:click={() => deleteRecipe(id, image_url)} class="delete-button">Remove</button>
         </div>
     {/each}
 </div>
