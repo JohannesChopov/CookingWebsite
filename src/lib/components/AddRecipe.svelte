@@ -1,6 +1,7 @@
 <script>
     import { supabase } from '$lib/supabase';
     import { onMount } from 'svelte';
+    import Instructions from './Instructions.svelte';
 
     let title = '';
     let description = '';
@@ -68,6 +69,7 @@
     <input type="text" bind:value={title} placeholder="Title" required />
     <textarea bind:value={description} placeholder="Description"></textarea>
     <textarea bind:value={ingredients} placeholder="Ingredients"></textarea>
+    <Instructions></Instructions>
     <textarea bind:value={instructions} placeholder="Instructions"></textarea>
     <input type="file" on:change={handleFileChange} />
     <button type="submit">Add Recipe</button>

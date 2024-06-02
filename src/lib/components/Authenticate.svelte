@@ -1,13 +1,8 @@
 <script lang="ts">
-    import { createClient } from '@supabase/supabase-js'
-    import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from "$env/static/public";
     import { onMount } from 'svelte';
     import { supabase } from '$lib/supabase';
 
-    /*const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY)*/
-    //console.log(supabase)
-
-    let user: any;
+    export let user: any = null;
     let loading = true;
 
     let email = "";
@@ -67,11 +62,14 @@
 
         const { user, session, error: authError } = authResponse;
 
+        console.log(user)
+
         if (authError) {
             error = authError.message;
         } else {
             // Redirect or perform further actions after successful auth
-            window.location.href = "/";
+            //window.location.href = "/";
+            window.location.reload();
         }
     };
 
