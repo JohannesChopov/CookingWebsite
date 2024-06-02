@@ -11,11 +11,19 @@
         if (session?.user) {
             user_id = session.user.id;
 
-            // Fetch recipes for the logged-in user
-            const { data, error } = await supabase
+            getRecipe(user_id)
+            
+        } else {
+            console.error('User not logged in');
+        }
+    });
+
+    const getRecipe = async (userID) => {
+        // Fetch recipes for the logged-in user
+        const { data, error } = await supabase
                 .from('recipes')
                 .select('*')
-                .eq('user_id', user_id);
+                .eq('user_id', userID);
 
             if (error) {
                 console.error('Error fetching recipes:', error);
@@ -23,10 +31,7 @@
                 recipes = data;
                 //console.log(data);
             }
-        } else {
-            console.error('User not logged in');
-        }
-    });
+    }
 
     const deleteRecipe = async (recipeId, imageUrl) => {
         const {data, error: searchError} = await supabase
@@ -49,7 +54,7 @@
             
             const { error: imageError } = await supabase.storage
                 .from('recipe-images')
-                .remove(`public/${name}${user_id}`);
+                .remove(`public/${user_id}` + "/" + `${name}`);
                 
             if (imageError) {
                 console.error('Error deleting image:', imageError);
@@ -67,7 +72,8 @@
                 } else {
                     console.log('Recipe and image deleted');
                     // Update the recipes list to reflect the deletion
-                    recipes = recipes.filter(recipe => recipe.id !== recipeId);
+                    getRecipe(user_id)
+                    //recipes = recipes.filter(recipe => recipe.id !== recipeId);
                 }
 
             }

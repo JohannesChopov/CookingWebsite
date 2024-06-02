@@ -3,9 +3,7 @@
 
     /** @type {import('./$types').PageData} */
     // data uit page.js (eventueel doorgelinkt vanuit page.server.js)
-    // @ts-ignore
     export let data;
-    // @ts-ignore
     const recipes = JSON.parse(data.recipes)
 
     //const {recipes} = data;

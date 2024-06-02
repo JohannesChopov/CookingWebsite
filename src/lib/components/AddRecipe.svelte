@@ -29,7 +29,7 @@
         let image_url = null;
         if (image) {
 
-            const filePath = `public/${title}${user_id}`
+            const filePath = `public/${user_id}` + "/" + `${title}`
             const file = image
 
             const { data, error } = await supabase.storage.from('recipe-images').upload(filePath, file);

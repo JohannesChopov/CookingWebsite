@@ -6,21 +6,6 @@
 
     console.log('test');
     console.log(recipes);
-    /*
-    onMount(async () => {
-        // Fetch recipes along with the creator's email
-        const { data, error } = await supabase
-            .from('recipes')
-            .select('title, description, image_url, users(email)');
-
-        if (error) {
-            console.error('Error fetching recipes:', error);
-        } else {
-            recipes = data;
-            console.log(data);
-        }
-    });
-    */
 </script>
 
 <div class="recipes-grid">
