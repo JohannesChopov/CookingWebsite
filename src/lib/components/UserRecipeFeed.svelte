@@ -31,7 +31,10 @@
     const deleteRecipe = async (recipeId, imageUrl) => {
         const {data, error: searchError} = await supabase
             .from('recipes')
-            .select('title')
+            .select(`
+                title,
+                user_id
+            `)
             .eq('id', recipeId)
             .single();
         
@@ -46,7 +49,7 @@
             
             const { error: imageError } = await supabase.storage
                 .from('recipe-images')
-                .remove(`public/${name}`);
+                .remove(`public/${name}${user_id}`);
                 
             if (imageError) {
                 console.error('Error deleting image:', imageError);
