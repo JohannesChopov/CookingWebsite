@@ -5,7 +5,7 @@
         title: '',
         description: '',
         ingredients: '',
-        instructions: '',
+        instructions: [],
         image_url: ''
     };
 </script>
@@ -27,7 +27,13 @@
             <dt>ingredients</dt>
             <dd>{recipe.ingredients ?? ''}</dd>
             <dt>instructions</dt>
-            <dd>{recipe.instructions ?? ''}</dd>
+            <dd>
+                <ul>
+                    {#each recipe.instructions as instruction, index}
+                        <li>Step {index + 1}: {instruction}</li>
+                    {/each}
+                </ul>
+            </dd>
         </dl>
     </section>
 </article>
@@ -84,6 +90,16 @@
 
     .recipe-article section {
         margin-top: 20px;
+    }
+
+    .recipe-article ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .recipe-article li {
+        margin-bottom: 10px;
+        color: #555;
     }
 </style>
 

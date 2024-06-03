@@ -2,13 +2,15 @@
     import { supabase } from '$lib/supabase';
     import { onMount } from 'svelte';
     import Instructions from './Instructions.svelte';
+    import { stepsStore } from '../../stores/StepStore';
+    import { get } from 'svelte/store';
 
     let title = '';
     let description = '';
     let ingredients = '';
     let instructions = '';
     let image = null;
-    let user_id = null; // Example user ID, replace with actual logged-in user ID
+    let user_id = null;
 
     const handleFileChange = (event) => {
         image = event.target.files[0];
@@ -18,11 +20,9 @@
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
             user_id = session.user.id;
-            //console.log(user_id);
         } else {
             console.error('User not logged in');
-            // Handle the case when there is no session or user
-            user_id = null; // or any appropriate default action
+            user_id = null;
         }
     });
 
@@ -30,28 +30,29 @@
         let image_url = null;
         if (image) {
 
-            const filePath = `public/${user_id}` + "/" + `${title}`
-            const file = image
+            const filePath = `public/${user_id}` + "/" + `${title}`;
+            const file = image;
 
             const { data, error } = await supabase.storage.from('recipe-images').upload(filePath, file);
-            /*location.reload();*/
+
             if (error) {
                 console.error('Error uploading image:', error);
                 return;
             }
             const { data: url } = supabase.storage.from('recipe-images').getPublicUrl(filePath);
 
-            //console.log(url.publicUrl)
             image_url = url.publicUrl;
         }
 
+        const steps = get(stepsStore);
+        
         const { error } = await supabase.from('recipes').insert([
             {
                 user_id,
                 title,
                 description,
                 ingredients,
-                instructions,
+                instructions: steps,
                 image_url
             }
         ]);
@@ -69,8 +70,10 @@
     <input type="text" bind:value={title} placeholder="Title" required />
     <textarea bind:value={description} placeholder="Description"></textarea>
     <textarea bind:value={ingredients} placeholder="Ingredients"></textarea>
-    <Instructions></Instructions>
+    <Instructions/>
+    <!--
     <textarea bind:value={instructions} placeholder="Instructions"></textarea>
+    -->
     <input type="file" on:change={handleFileChange} />
     <button type="submit">Add Recipe</button>
 </form>

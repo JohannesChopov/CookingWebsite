@@ -1,10 +1,14 @@
 <script>
+    import { stepsStore } from '../../stores/StepStore';
+    import { get } from 'svelte/store';
+
     let steps = [];
     let stepInput = '';
 
     const addStep = () => {
         if (stepInput.trim() !== '') {
             steps = [...steps, { index: steps.length + 1, text: stepInput }];
+            stepsStore.set(steps.map(step => step.text)); // Store only the text;
             stepInput = '';
         }
 
@@ -14,6 +18,7 @@
     const removeStep = (index) => {
         steps = steps.filter(step => step.index !== index);
         steps = steps.map((step, i) => ({ ...step, index: i + 1 }));
+        stepsStore.set(steps.map(step => step.text)); // Update the store with only the text
     };
 </script>
 
@@ -23,14 +28,14 @@
         {#each steps as { index, text }}
             <div class="step-item">
                 <p>Step {index}: {text}</p>
-                <button on:click={() => removeStep(index)}>Remove</button>
+                <button type="button" on:click={() => removeStep(index)}>Remove</button>
             </div>
         {/each}
     </div>
     <div class="add-step">
         <label for="step-input">Step {steps.length + 1}: </label>
         <input id="step-input" type="text" bind:value={stepInput} placeholder="Add a step..." />
-        <button on:click={addStep}>+</button>
+        <button type="button" on:click={addStep}>+</button>
     </div>
 </div>
 
