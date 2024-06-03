@@ -2,6 +2,8 @@
     import { supabase } from '$lib/supabase';
     import { onMount } from 'svelte';
     import Instructions from './Instructions.svelte';
+    import Ingredients from './Ingredients.svelte';
+    import {ingredientsStore} from '../../stores/IngredientStore';
     import { stepsStore } from '../../stores/StepStore';
     import { get } from 'svelte/store';
 
@@ -39,19 +41,20 @@
                 console.error('Error uploading image:', error);
                 return;
             }
-            const { data: url } = supabase.storage.from('recipe-images').getPublicUrl(filePath);
+            const { data: url } = await supabase.storage.from('recipe-images').getPublicUrl(filePath);
 
             image_url = url.publicUrl;
         }
 
         const steps = get(stepsStore);
-        
+        const ingredients = get(ingredientsStore);
+
         const { error } = await supabase.from('recipes').insert([
             {
                 user_id,
                 title,
                 description,
-                ingredients,
+                ingredients: ingredients,
                 instructions: steps,
                 image_url
             }
@@ -69,9 +72,12 @@
 <form on:submit|preventDefault={addRecipe}>
     <input type="text" bind:value={title} placeholder="Title" required />
     <textarea bind:value={description} placeholder="Description"></textarea>
-    <textarea bind:value={ingredients} placeholder="Ingredients"></textarea>
+
+    <Ingredients/>
+    
     <Instructions/>
     <!--
+    <textarea bind:value={ingredients} placeholder="Ingredients"></textarea>
     <textarea bind:value={instructions} placeholder="Instructions"></textarea>
     -->
     <input type="file" on:change={handleFileChange} />

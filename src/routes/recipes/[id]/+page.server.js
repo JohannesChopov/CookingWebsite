@@ -14,6 +14,12 @@ import { supabase } from '$lib/supabase';
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ params }) {
     const { id } = params;
+    
+    /*
+    console.log("id page.server.js")
+    console.log(id)
+    */
+    
     const { data, error } = await supabase
         .from('recipes')
         .select(`

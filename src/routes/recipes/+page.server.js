@@ -2,7 +2,7 @@
 import { supabase } from '$lib/supabase';
 
 /** @type {import('./$types').PageServerLoad} */
-export const load = async () => {
+export async function load() {
     //const db = supabase()
     //const {data, error} = await supabase.from('recipes').select('*');
     const {data, error} = await supabase.from('recipes').select('id, title, description, image_url, user:users (email)');

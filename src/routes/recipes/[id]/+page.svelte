@@ -5,12 +5,14 @@
     export let data;
 
     const {recipe} = data;
+    /*
     console.log("id: +page.svelte");
     console.log(recipe?.title);
+    */
 </script>
 
 <svelte:head>
-    <title>{recipe ? recipe.title : 'Recipe not found'}</title>
+    <title>{recipe.title}</title>
 </svelte:head>
 
 {#if recipe}

@@ -3,8 +3,8 @@
         <nav>
             <a href="/">Home</a>
             <a href="/about">About</a>
-            <a href="/recipes" >Recipes</a>
-            <a href="/login" data-sveltekit-preload-data>Profile</a>
+            <a href="/recipes">Recipes</a>
+            <a href="/login">Profile</a>
         </nav>
     </header>
     <slot/>
@@ -38,7 +38,8 @@
         user = session?.user || null;
     });
 
-    
+
+
 </script>
 
 <style>
