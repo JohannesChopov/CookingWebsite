@@ -1,10 +1,13 @@
 <script>
+    import { ingredientsStore } from "../../stores/IngredientStore";
+    import Ingredients from "./Ingredients.svelte";
+
     export let recipe = {
         created_at: null,
         user: { email: '' },
         title: '',
         description: '',
-        ingredients: '',
+        ingredients: [],
         instructions: [],
         image_url: ''
     };
@@ -24,8 +27,23 @@
             <dd>{recipe.user.email ?? 'Unknown'}</dd>
             <dt>description</dt>
             <dd>{recipe.description ?? ''}</dd>
-            <dt>ingredients</dt>
-            <dd>{recipe.ingredients ?? ''}</dd>
+            <dt>ingredients</dt>         
+            <dd>
+                <ul>
+                    {#each recipe.ingredients as [ingredient_name, unit, amount]}
+                        <li>{amount} {unit || ''} {ingredient_name}</li>
+                    {/each}
+                </ul>
+            </dd>
+            <!--
+            <dd>
+                <ul>
+                    {#each recipe.ingredients as ingredient}
+                        <li> {ingredient}</li>
+                    {/each}
+                </ul>
+            </dd>
+            -->
             <dt>instructions</dt>
             <dd>
                 <ul>

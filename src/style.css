@@ -58,15 +58,53 @@
 }
 
 .layout-header {
-    font-size: 50px;
     background-color: white;
     color: green;
+    font-size: 2rem;
+    text-align: center;
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    top: 0;
+    position: sticky;
+}
+
+.layout-header nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.layout-header a {
+    color: green;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.layout-header a:hover {
+    color: darkgreen;
+}
+
+.content {
+    flex: 1;
+}
+
+.mainContainer {
+    min-height: 100vh;
+    background: linear-gradient(to right, #97e75b, #1ab63e);
+    color: white;
+    position: relative;
+    display: felx;
+    flex-direction: column;
 }
 
 .layout-footer {
-    font-size: 50px;
+    font-size: 1.5rem;
     background-color: darkgreen;
     color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
 }
 
 .recipes-grid {

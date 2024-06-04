@@ -1,14 +1,11 @@
 <script>
     import { onMount } from 'svelte';
     import { supabase } from '$lib/supabase';
-    import { writable } from 'svelte/store';
-
-    import { ingredientsStore } from '../../stores/IngredientStore';
     import { get } from 'svelte/store';
+    import { ingredientsStore } from '../../stores/IngredientStore';
 
     let search = '';
     let searchResults = [];
-    let selectedIngredients = writable([]);
 
     const fetchIngredients = async () => {
         if (search.trim() !== '') {
@@ -28,16 +25,17 @@
     };
 
     const addIngredient = (ingredient) => {
-        selectedIngredients.update(ingredients => [
-            ...ingredients, 
+        ingredientsStore.update(ingredients => [
+            ...ingredients,
             { ...ingredient, amount: '' }
         ]);
         search = '';
         searchResults = [];
+        console.log("Ingredients: ", get(ingredientsStore));
     };
 
     const removeIngredient = (index) => {
-        selectedIngredients.update(ingredients => ingredients.filter((_, i) => i !== index));
+        ingredientsStore.update(ingredients => ingredients.filter((_, i) => i !== index));
     };
 </script>
 
@@ -53,10 +51,10 @@
     </div>
 
     <div class="selected-ingredients">
-        {#each $selectedIngredients as { ingredient_name, unit, amount }, index}
+        {#each $ingredientsStore as { ingredient_name, unit, amount }, index}
             <div class="ingredient-item">
                 <span>{ingredient_name} ({unit})</span>
-                <input type="number" bind:value={$selectedIngredients[index].amount} placeholder="Amount" />
+                <input type="number" bind:value={$ingredientsStore[index].amount} placeholder="Amount" />
                 <button on:click={() => removeIngredient(index)}>Remove</button>
             </div>
         {/each}

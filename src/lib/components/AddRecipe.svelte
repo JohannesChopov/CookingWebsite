@@ -3,7 +3,7 @@
     import { onMount } from 'svelte';
     import Instructions from './Instructions.svelte';
     import Ingredients from './Ingredients.svelte';
-    import {ingredientsStore} from '../../stores/IngredientStore';
+    import { ingredientsStore } from '../../stores/IngredientStore';
     import { stepsStore } from '../../stores/StepStore';
     import { get } from 'svelte/store';
 
@@ -13,9 +13,17 @@
     let instructions = '';
     let image = null;
     let user_id = null;
+    let imagePreview = null;
 
     const handleFileChange = (event) => {
         image = event.target.files[0];
+        if (image) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview = e.target.result;
+            };
+            reader.readAsDataURL(image);
+        }
     };
 
     onMount(async () => {
@@ -26,6 +34,7 @@
             console.error('User not logged in');
             user_id = null;
         }
+        console.log("ADDRECIPE" + user_id)
     });
 
     const addRecipe = async () => {
@@ -47,7 +56,10 @@
         }
 
         const steps = get(stepsStore);
-        const ingredients = get(ingredientsStore);
+        const ingredients = get(ingredientsStore).map(({ ingredient_name, unit, amount }) => [ingredient_name, unit, amount]);;
+
+        console.log(steps)
+        console.log(ingredients)
 
         const { error } = await supabase.from('recipes').insert([
             {
@@ -76,10 +88,11 @@
     <Ingredients/>
     
     <Instructions/>
-    <!--
-    <textarea bind:value={ingredients} placeholder="Ingredients"></textarea>
-    <textarea bind:value={instructions} placeholder="Instructions"></textarea>
-    -->
+
+    {#if imagePreview}
+        <img src={imagePreview} alt="Image preview" style="max-width: 100%; height: auto;" />
+    {/if}
+
     <input type="file" on:change={handleFileChange} />
     <button type="submit">Add Recipe</button>
 </form>

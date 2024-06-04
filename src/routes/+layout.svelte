@@ -7,39 +7,40 @@
             <a href="/login">Profile</a>
         </nav>
     </header>
-    <slot/>
+    <main>
+        <slot/>
+    </main>
     <footer class="layout-footer">Extra info</footer>
 </div>
 
 <script>
+    
     import '../style.css';
 
     import {invalidate} from '$app/navigation'
     import {onMount} from 'svelte'
-    /*import { supabase } from '$lib/supabase';*/
 
     export let data
     
     let { supabase, session} = data
     $: ({supabase, session} = data)
-
+    
     onMount(() => {
         const {data} = supabase.auth.onAuthStateChange((event, _session) => {
             if (_session?.expires_at !== session?.expires_at) {
                 invalidate('supabase:auth')
             }
         })
-
+        
         return () => data.subscription.unsubscribe()
+        
     })
     
     onMount(async () => {
         const { data: { session } } = await supabase.auth.getSession();
         user = session?.user || null;
     });
-
-
-
+    
 </script>
 
 <style>

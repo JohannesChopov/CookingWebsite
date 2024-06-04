@@ -30,9 +30,11 @@
         });
         
         // Clean up listener on component unmount
+        /*
         return () => {
             authListener.unsubscribe();
         };
+        */
     });
     
     onMount(async () => {
