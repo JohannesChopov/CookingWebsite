@@ -2,9 +2,9 @@
     <header class="layout-header">
         <nav>
             <a href="/">Home</a>
-            <a href="/about">About</a>
             <a href="/recipes">Recipes</a>
             <a href="/login">Profile</a>
+            <a href="/about">About</a>
         </nav>
     </header>
     <main>
@@ -44,12 +44,5 @@
 </script>
 
 <style>
-    .mainContainer {
-        min-height: 100vh;
-        background: linear-gradient(to right, #97e75b, #1ab63e);
-        color: white;
-        position: relative;
-        display: felx;
-        flex-direction: column;
-    }
+    
 </style>

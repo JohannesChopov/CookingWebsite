@@ -15,8 +15,14 @@
                     <img class="recipe-image" src={image_url} alt={title} />
                     <div class="recipe-name">{title}</div>
                     <p>{description}</p>
-                    <p>Creator: {user.email}</p>
+                    <p>Creator: {user.email.split('@')[0]}</p>
                 </a>
             </div>
     {/each}
 </div>
+
+<style>
+    a {
+        text-decoration:none;
+    }
+</style>

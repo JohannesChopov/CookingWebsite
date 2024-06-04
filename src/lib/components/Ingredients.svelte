@@ -37,6 +37,21 @@
     const removeIngredient = (index) => {
         ingredientsStore.update(ingredients => ingredients.filter((_, i) => i !== index));
     };
+
+    // Function to handle input change for amount
+    const handleAmountChange = (event, index) => {
+        const newValue = parseFloat(event.target.value);
+
+        // Ensure value is a number between 0 and 50 (inclusive)
+        const clampedValue = Math.max(0, Math.min(newValue, 50));
+
+        ingredientsStore.update(ingredients => {
+        const updatedIngredients = [...ingredients];
+        updatedIngredients[index].amount = clampedValue;
+        return updatedIngredients;
+        });
+    };
+
 </script>
 
 <div class="ingredients-container">
@@ -45,7 +60,7 @@
     <div class="search-results">
         {#each searchResults as ingredient}
             <div class="search-result" on:click={() => addIngredient(ingredient)}>
-                {ingredient.ingredient_name} ({ingredient.unit})
+                {ingredient.ingredient_name} {ingredient.unit ? `(${ingredient.unit})` : ''}
             </div>
         {/each}
     </div>
@@ -53,8 +68,8 @@
     <div class="selected-ingredients">
         {#each $ingredientsStore as { ingredient_name, unit, amount }, index}
             <div class="ingredient-item">
-                <span>{ingredient_name} ({unit})</span>
-                <input type="number" bind:value={$ingredientsStore[index].amount} placeholder="Amount" />
+                <span>{ingredient_name} {unit ? `(${unit})` : ''}</span>
+                <input type="number" bind:value={$ingredientsStore[index].amount} placeholder="Amount" on:input={(event) => handleAmountChange(event, index)} />
                 <button on:click={() => removeIngredient(index)}>Remove</button>
             </div>
         {/each}
