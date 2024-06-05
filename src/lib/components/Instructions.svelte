@@ -8,7 +8,7 @@
     const addStep = () => {
         if (stepInput.trim() !== '') {
             steps = [...steps, { index: steps.length + 1, text: stepInput }];
-            stepsStore.set(steps.map(step => step.text)); // Store only the text;
+            stepsStore.set(steps.map(step => step.text));
             stepInput = '';
         }
 
@@ -18,7 +18,7 @@
     const removeStep = (index) => {
         steps = steps.filter(step => step.index !== index);
         steps = steps.map((step, i) => ({ ...step, index: i + 1 }));
-        stepsStore.set(steps.map(step => step.text)); // Update the store with only the text
+        stepsStore.set(steps.map(step => step.text));
     };
 </script>
 
@@ -35,8 +35,11 @@
     <div class="add-step">
         <label for="step-input">Step {steps.length + 1}: </label>
         <input id="step-input" type="text" bind:value={stepInput} placeholder="Add a step..." />
-        <button type="button" on:click={addStep}>+</button>
+        <button type="button" on:click={addStep} disabled={steps.length >= 20}>+</button>
     </div>
+    {#if steps.length >= 20}
+        <p style="color: red;">Maximum of 20 steps reached</p>
+    {/if}
 </div>
 
 <style>

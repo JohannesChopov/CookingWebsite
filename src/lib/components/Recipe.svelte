@@ -11,6 +11,18 @@
         instructions: [],
         image_url: ''
     };
+    
+    const getWindowSize = () => {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        console.log(`Width: ${width}, Height: ${height}`);
+        return { width, height };
+    }   
+
+    //getWindowSize();
+
+    //window.addEventListener('resize', getWindowSize);
+    
 </script>
 
 <article class="recipe-article">

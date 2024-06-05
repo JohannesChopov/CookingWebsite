@@ -11,14 +11,14 @@
         if (session?.user) {
             user_id = session.user.id;
 
-            getRecipe(user_id)
+            getRecipes(user_id)
             
         } else {
             console.error('User not logged in');
         }
     });
 
-    const getRecipe = async (userID) => {
+    const getRecipes = async (userID) => {
         // Fetch recipes for the logged-in user
         const { data, error } = await supabase
                 .from('recipes')
@@ -72,7 +72,7 @@
                 } else {
                     console.log('Recipe and image deleted');
                     // Update the recipes list to reflect the deletion
-                    getRecipe(user_id)
+                    getRecipes(user_id)
                     //recipes = recipes.filter(recipe => recipe.id !== recipeId);
                 }
 
@@ -87,11 +87,14 @@
 <div class="recipes-grid">
     {#each recipes as { id, title, description, image_url }}
         <div class="recipe-card">
-            <img class="recipe-image" src={image_url} alt={title} />
-            <div class="recipe-name">{title}</div>
-            <p>{title}</p>
-            <p>{description}</p>
-            <button on:click={() => deleteRecipe(id, image_url)} class="delete-button">Remove</button>
+            <a href={`/recipes/${id}`}>
+                <img class="recipe-image" src={image_url} alt={title} />
+                <div class="recipe-name">{title}</div>
+                <p>{title}</p>
+                <p>{description}</p>
+            </a>
+                <button on:click={() => deleteRecipe(id, image_url)} class="delete-button">Remove</button>
         </div>
     {/each}
 </div>
+

@@ -17,12 +17,19 @@
 
     const handleFileChange = (event) => {
         image = event.target.files[0];
-        if (image) {
+        const allowedTypes = ['image/jpeg', 'image/png'];
+
+        if (image && allowedTypes.includes(image.type)) {
             const reader = new FileReader();
             reader.onload = (e) => {
                 imagePreview = e.target.result;
             };
             reader.readAsDataURL(image);
+        } else {
+            alert('Only images (JPEG, PNG) are allowed.');
+            image = null;
+            imagePreview = null;
+            event.target.value = '';
         }
     };
 
@@ -82,8 +89,8 @@
 </script>
 
 <form on:submit|preventDefault={addRecipe}>
-    <input type="text" bind:value={title} placeholder="Title" required />
-    <textarea bind:value={description} placeholder="Description"></textarea>
+    <input type="text" bind:value={title} placeholder="Title" required maxlength="100"/>
+    <textarea bind:value={description} placeholder="Description" required maxlength="500"></textarea>
 
     <Ingredients/>
     
@@ -93,7 +100,7 @@
         <img src={imagePreview} alt="Image preview" style="max-width: 100%; height: auto;" />
     {/if}
 
-    <input type="file" on:change={handleFileChange} />
+    <input type="file" on:change={handleFileChange} required/>
     <button type="submit">Add Recipe</button>
 </form>
 
