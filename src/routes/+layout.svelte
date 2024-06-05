@@ -21,7 +21,7 @@
     import {onMount} from 'svelte'
 
     export let data
-    
+    /*
     let { supabase, session} = data
     $: ({supabase, session} = data)
     
@@ -35,7 +35,7 @@
         return () => data.subscription.unsubscribe()
         
     })
-    
+    */
     onMount(async () => {
         const { data: { session } } = await supabase.auth.getSession();
         user = session?.user || null;

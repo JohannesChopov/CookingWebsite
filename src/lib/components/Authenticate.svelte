@@ -19,6 +19,7 @@
         } else {
             user = null;
             window.location.href = "/login";
+            localStorage.clear();
         }
     };
     
@@ -40,6 +41,9 @@
     onMount(async () => {
         const { data: { session } } = await supabase.auth.getSession();
         user = session?.user || null;
+        
+        localStorage.setItem('userID', user.id);
+        
         loading = false;
     });
     

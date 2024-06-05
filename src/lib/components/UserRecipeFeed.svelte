@@ -1,12 +1,16 @@
 <script>
     import { onMount } from 'svelte';
     import { supabase } from '$lib/supabase';
+    import ModifyRecipe from './ModifyRecipe.svelte';
 
     let recipes = [];
     let user_id = null;
 
+    let isEditing = false;
+    let editingRecipeId = null;
+
+
     onMount(async () => {
-        // Get the current session
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
             user_id = session.user.id;
@@ -19,7 +23,6 @@
     });
 
     const getRecipes = async (userID) => {
-        // Fetch recipes for the logged-in user
         const { data, error } = await supabase
                 .from('recipes')
                 .select('*')
@@ -29,7 +32,6 @@
                 console.error('Error fetching recipes:', error);
             } else {
                 recipes = data;
-                //console.log(data);
             }
     }
 
@@ -71,7 +73,6 @@
                     console.error('Error deleting recipe:', recipeError);
                 } else {
                     console.log('Recipe and image deleted');
-                    // Update the recipes list to reflect the deletion
                     getRecipes(user_id)
                     //recipes = recipes.filter(recipe => recipe.id !== recipeId);
                 }
@@ -82,19 +83,28 @@
         
     };
 
+    const editRecipe = async (id) => {
+        isEditing = true;
+        editingRecipeId = id;
+    };
+
 </script>
-
-<div class="recipes-grid">
-    {#each recipes as { id, title, description, image_url }}
-        <div class="recipe-card">
-            <a href={`/recipes/${id}`}>
-                <img class="recipe-image" src={image_url} alt={title} />
-                <div class="recipe-name">{title}</div>
-                <p>{title}</p>
-                <p>{description}</p>
-            </a>
-                <button on:click={() => deleteRecipe(id, image_url)} class="delete-button">Remove</button>
-        </div>
-    {/each}
-</div>
-
+{#if isEditing}
+    <ModifyRecipe {editingRecipeId} />
+{:else}
+    <div class="recipes-grid">
+        {#each recipes as { id, title, description, image_url }}
+            <div class="recipe-card">
+                <a href={`/recipes/${id}`}>
+                    <img class="recipe-image" src={image_url} alt={title} />
+                    <div class="recipe-name">{title}</div>
+                    <p>{description}</p>
+                </a>
+                <grid class="button-grid">
+                    <button on:click={() => editRecipe(id)} class="edit-button">Edit</button>
+                    <button on:click={() => deleteRecipe(id, image_url)} class="delete-button">Remove</button>
+                </grid>
+            </div>
+        {/each}
+    </div>
+{/if}

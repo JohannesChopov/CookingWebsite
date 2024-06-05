@@ -6,6 +6,14 @@
 
     console.log('test');
     console.log(recipes);
+
+    /*
+    const getUser = () => {
+        const user = localStorage.getItem("userID");
+        console.log(user);
+    }
+    */
+    
 </script>
 
 <div class="recipes-grid">

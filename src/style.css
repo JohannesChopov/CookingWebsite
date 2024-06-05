@@ -37,6 +37,11 @@
 
 }
 
+.button-grid {
+    display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+        gap: 10px;
+}
 .delete-button {
     background: red;
     color: white;
@@ -49,6 +54,21 @@
 
 .delete-button:hover {
     background: darkred;
+}
+
+.edit-button {
+    background: green;
+    color: white;
+    border: none;
+    padding: 10px;
+    
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.edit-button:hover {
+    background: darkgreen;
 }
 
 @media (max-width: 600px) {

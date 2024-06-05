@@ -33,7 +33,7 @@
     <section>
         <h1>{recipe.title}</h1>
         <dl>
-            <dt>date</dt>
+            <dt>date created</dt>
             <dd>{recipe.created_at ?? ''}</dd>
             <dt>creator</dt>
             <dd>{recipe.user.email ?? 'Unknown'}</dd>
