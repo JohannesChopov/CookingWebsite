@@ -9,7 +9,8 @@
 
     export let editingRecipeId = null;
 
-    let title = '';
+    let oldtitle = '';
+    let newtitle = '';
     let description = '';
     let image = null;
     let user_id = null;
@@ -28,7 +29,8 @@
             return;
         }
 
-        title = data.title;
+        oldtitle = data.title;
+        newtitle = data.title;
         description = data.description;
         ingredientsStore.set(data.ingredients.map(([ingredient_name, unit, amount]) => ({ ingredient_name, unit, amount })));
         stepsStore.set(data.instructions);
@@ -79,10 +81,9 @@
         let image_url = imagePreview;
 
         if (image) {
-
-            const { error: deleteError } = await supabase.storage.from('recipe-images').remove([oldImagePath]);
-            // Delete the old image if a new image is uploaded
-            const oldImagePath = imagePreview.replace(supabase.storage.from('recipe-images').getPublicUrl('').data.publicUrl, '');
+            const { error: deleteError } = await supabase.storage
+                .from('recipe-images')
+                .remove(`public/${user_id}/${oldtitle}`);
 
             if (deleteError) {
                 console.error('Error deleting old image:', deleteError);
@@ -90,7 +91,7 @@
             }
 
             // Upload the new image
-            const filePath = `public/${user_id}/${title}`;
+            const filePath = `public/${user_id}/${newtitle}`;
             const { data, error } = await supabase.storage.from('recipe-images').upload(filePath, image);
 
             if (error) {
@@ -99,11 +100,12 @@
             }
 
             const { data: url } = await supabase.storage.from('recipe-images').getPublicUrl(filePath);
-            image_url = url.publicUrl;
+            image_url = `${url.publicUrl}?t=${new Date().getTime()}`;
+            console.log(image_url)
         }
 
         const updatedRecipe = {
-            title,
+            title: newtitle,
             description,
             ingredients,
             instructions: steps,
@@ -122,6 +124,14 @@
             ingredientsStore.set([]);
             stepsStore.set([]);
 
+            oldtitle = '';
+            newtitle = '';
+            description = '';
+            image = null;
+            user_id = null;
+            imagePreview = null;
+            errorMessage = '';
+
             window.location.reload();
         }
     };
@@ -130,7 +140,7 @@
 </script>
 
 <form on:submit|preventDefault={updateRecipe}>
-    <input type="text" bind:value={title} placeholder="Title" required maxlength="50"/>
+    <input type="text" bind:value={newtitle} placeholder="Title" required maxlength="50"/>
     <textarea bind:value={description} placeholder="Description" required maxlength="500"></textarea>
 
     <Ingredients/>
