@@ -19,9 +19,9 @@
 <Authenticate/>
 
 {#if user}
-    <AddRecipe/>
+    <UserRecipeFeed/>
 {:else}
     <p style="align: center">Please log in to add a recipe.</p>
 {/if}
 
-<UserRecipeFeed/>
+

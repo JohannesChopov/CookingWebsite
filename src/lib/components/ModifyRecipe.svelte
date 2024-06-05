@@ -9,17 +9,12 @@
 
     export let editingRecipeId = null;
 
-    let recipe = null;
-
     let title = '';
     let description = '';
     let image = null;
     let user_id = null;
     let imagePreview = null;
-    //let steps = null;
-
     let errorMessage = '';
-
 
     const loadRecipe = async () => {
         const { data, error } = await supabase
@@ -32,27 +27,20 @@
             console.error('Error loading recipe:', error);
             return;
         }
-        else {
-            
-            recipe = data;
 
-            console.log(recipe)
+        title = data.title;
+        description = data.description;
+        ingredientsStore.set(data.ingredients.map(([ingredient_name, unit, amount]) => ({ ingredient_name, unit, amount })));
+        stepsStore.set(data.instructions);
+        imagePreview = data.image_url;
 
-            title = recipe.title;
-            description = recipe.description;
-            ingredientsStore.set(recipe.ingredients.map(([ingredient_name, unit, amount]) => ({ ingredient_name, unit, amount })));
-            stepsStore.set(recipe.instructions);
-            imagePreview = recipe.image_url;
-
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session?.user) {
-                user_id = session.user.id;
-            } else {
-                console.error('User not logged in');
-                user_id = null;
-            }
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+            user_id = session.user.id;
+        } else {
+            console.error('User not logged in');
+            user_id = null;
         }
-        
     };
 
     const handleFileChange = (event) => {
@@ -91,11 +79,22 @@
         let image_url = imagePreview;
 
         if (image) {
+
+            const { error: deleteError } = await supabase.storage.from('recipe-images').remove([oldImagePath]);
+            // Delete the old image if a new image is uploaded
+            const oldImagePath = imagePreview.replace(supabase.storage.from('recipe-images').getPublicUrl('').data.publicUrl, '');
+
+            if (deleteError) {
+                console.error('Error deleting old image:', deleteError);
+                return;
+            }
+
+            // Upload the new image
             const filePath = `public/${user_id}/${title}`;
             const { data, error } = await supabase.storage.from('recipe-images').upload(filePath, image);
 
             if (error) {
-                console.error('Error uploading image:', error);
+                console.error('Error uploading new image:', error);
                 return;
             }
 
@@ -103,18 +102,26 @@
             image_url = url.publicUrl;
         }
 
-        const { error } = await supabase.from('recipes').update({
+        const updatedRecipe = {
             title,
             description,
             ingredients,
             instructions: steps,
             image_url
-        }).eq('id', editingRecipeId);
+        };
+
+        console.log('Updated Recipe:', updatedRecipe);
+
+        const { error } = await supabase.from('recipes').update(updatedRecipe).eq('id', editingRecipeId);
 
         if (error) {
             console.error('Error updating recipe:', error);
         } else {
             console.log("Recipe updated");
+
+            ingredientsStore.set([]);
+            stepsStore.set([]);
+
             window.location.reload();
         }
     };

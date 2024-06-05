@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { supabase } from '$lib/supabase';
     import ModifyRecipe from './ModifyRecipe.svelte';
+    import AddRecipe from './AddRecipe.svelte';
 
     let recipes = [];
     let user_id = null;
@@ -92,19 +93,20 @@
 {#if isEditing}
     <ModifyRecipe {editingRecipeId} />
 {:else}
-    <div class="recipes-grid">
-        {#each recipes as { id, title, description, image_url }}
-            <div class="recipe-card">
-                <a href={`/recipes/${id}`}>
-                    <img class="recipe-image" src={image_url} alt={title} />
-                    <div class="recipe-name">{title}</div>
-                    <p>{description}</p>
-                </a>
-                <grid class="button-grid">
-                    <button on:click={() => editRecipe(id)} class="edit-button">Edit</button>
-                    <button on:click={() => deleteRecipe(id, image_url)} class="delete-button">Remove</button>
-                </grid>
-            </div>
-        {/each}
-    </div>
+    <AddRecipe/>
 {/if}
+<div class="recipes-grid">
+    {#each recipes as { id, title, description, image_url }}
+        <div class="recipe-card">
+            <a href={`/recipes/${id}`}>
+                <img class="recipe-image" src={image_url} alt={title} />
+                <div class="recipe-name">{title}</div>
+                <p>{description}</p>
+            </a>
+            <grid class="button-grid">
+                <button on:click={() => editRecipe(id)} class="edit-button">Edit</button>
+                <button on:click={() => deleteRecipe(id, image_url)} class="delete-button">Remove</button>
+            </grid>
+        </div>
+    {/each}
+</div>

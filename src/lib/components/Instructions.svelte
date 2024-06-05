@@ -2,41 +2,44 @@
     import { stepsStore } from '../../stores/StepStore';
     import { get } from 'svelte/store';
 
-    let steps = [];
     let stepInput = '';
-    const maxSteps = 30;
+    const maxSteps = 20;
+
+    $: steps = get(stepsStore);
 
     const addStep = () => {
         if (stepInput.trim() !== '' && steps.length < maxSteps) {
-            steps = [...steps, { index: steps.length + 1, text: stepInput }];
-            stepsStore.set(steps.map(step => step.text));
+            stepsStore.update(steps => [...steps, stepInput]);
             stepInput = '';
         }
     };
 
+    const updateStep = (index, text) => {
+        stepsStore.update(steps => steps.map((step, i) => i === index ? text : step));
+    };
+
     const removeStep = (index) => {
-        steps = steps.filter(step => step.index !== index);
-        steps = steps.map((step, i) => ({ ...step, index: i + 1 }));
-        stepsStore.set(steps.map(step => step.text));
+        stepsStore.update(steps => steps.filter((_, i) => i !== index));
     };
 </script>
 
 <div class="steps-container">
     <h2>Add Recipe Instructions</h2>
     <div class="steps-list">
-        {#each steps as { index, text }}
+        {#each $stepsStore as text, index}
             <div class="step-item">
-                <p>Step {index}: {text}</p>
+                <label for="step-{index}">Step {index + 1}: </label>
+                <input id="step-{index}" type="text" bind:value={$stepsStore[index]} on:input={(e) => updateStep(index, e.target.value)} />
                 <button type="button" on:click={() => removeStep(index)}>Remove</button>
             </div>
         {/each}
     </div>
     <div class="add-step">
-        <label for="step-input">Step {steps.length + 1}: </label>
+        <label for="step-input">Step {$stepsStore.length + 1}: </label>
         <input id="step-input" type="text" bind:value={stepInput} placeholder="Add a step..." />
-        <button type="button" on:click={addStep} disabled={steps.length >= maxSteps}>+</button>
+        <button type="button" on:click={addStep} disabled={$stepsStore.length >= maxSteps}>+</button>
     </div>
-    {#if steps.length >= maxSteps}
+    {#if $stepsStore.length >= maxSteps}
         <p style="color: red;">Maximum of {maxSteps} steps reached</p>
     {/if}
 </div>
@@ -64,8 +67,19 @@
         align-items: center;
         margin-bottom: 5px;
     }
-    .step-item p {
-        margin: 0;
+    .step-item input {
+        flex: 1;
+    }
+    .step-item button {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .step-item button:hover {
+        background-color: darkred;
     }
     .add-step {
         display: flex;
