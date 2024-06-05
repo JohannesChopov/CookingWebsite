@@ -6,6 +6,7 @@
 
     let search = '';
     let searchResults = [];
+    const maxIngredients = 20;
 
     const fetchIngredients = async () => {
         if (search.trim() !== '') {
@@ -17,7 +18,8 @@
             if (error) {
                 console.error('Error fetching ingredients:', error);
             } else {
-                searchResults = data;
+                const selectedIngredients = get(ingredientsStore).map(i => i.ingredient_name);
+                searchResults = data.filter(ingredient => !selectedIngredients.includes(ingredient.ingredient_name));
             }
         } else {
             searchResults = [];
@@ -25,13 +27,15 @@
     };
 
     const addIngredient = (ingredient) => {
-        ingredientsStore.update(ingredients => [
-            ...ingredients,
-            { ...ingredient, amount: '' }
-        ]);
-        search = '';
-        searchResults = [];
-        console.log("Ingredients: ", get(ingredientsStore));
+        if (get(ingredientsStore).length < maxIngredients) {
+            ingredientsStore.update(ingredients => [
+                ...ingredients,
+                { ...ingredient, amount: '' }
+            ]);
+            search = '';
+            searchResults = [];
+            console.log("Ingredients: ", get(ingredientsStore));
+        }
     };
 
     const removeIngredient = (index) => {
@@ -59,7 +63,7 @@
 
     <div class="search-results">
         {#each searchResults as ingredient}
-            <div class="search-result" on:click={() => addIngredient(ingredient)}>
+            <div class="search-result { $ingredientsStore.length >= maxIngredients ? 'disabled' : '' }" on:click={() => addIngredient(ingredient)}>
                 {ingredient.ingredient_name} {ingredient.unit ? `(${ingredient.unit})` : ''}
             </div>
         {/each}
@@ -74,6 +78,9 @@
             </div>
         {/each}
     </div>
+    {#if $ingredientsStore.length >= maxIngredients}
+        <p style="color: red;">Maximum of {maxIngredients} ingredients reached</p>
+    {/if}
 </div>
 
 <style>
@@ -101,7 +108,11 @@
         padding: 5px;
         cursor: pointer;
     }
-    .search-result:hover {
+    .search-result.disabled {
+        pointer-events: none;
+        color: gray;
+    }
+    .search-result:hover:not(.disabled) {
         background: #e0e0e0;
     }
     .selected-ingredients {

@@ -4,7 +4,6 @@
     /** @type {import('./$types').PageData} */
     // data uit page.js (eventueel doorgelinkt vanuit page.server.js)
     export let data;
-    // @ts-ignore
     const recipes = JSON.parse(data.recipes)
 
     console.log("dit zijn de recepten")

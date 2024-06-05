@@ -4,15 +4,14 @@
 
     let steps = [];
     let stepInput = '';
+    const maxSteps = 30;
 
     const addStep = () => {
-        if (stepInput.trim() !== '') {
+        if (stepInput.trim() !== '' && steps.length < maxSteps) {
             steps = [...steps, { index: steps.length + 1, text: stepInput }];
             stepsStore.set(steps.map(step => step.text));
             stepInput = '';
         }
-
-        console.log(steps)
     };
 
     const removeStep = (index) => {
@@ -35,10 +34,10 @@
     <div class="add-step">
         <label for="step-input">Step {steps.length + 1}: </label>
         <input id="step-input" type="text" bind:value={stepInput} placeholder="Add a step..." />
-        <button type="button" on:click={addStep} disabled={steps.length >= 20}>+</button>
+        <button type="button" on:click={addStep} disabled={steps.length >= maxSteps}>+</button>
     </div>
-    {#if steps.length >= 20}
-        <p style="color: red;">Maximum of 20 steps reached</p>
+    {#if steps.length >= maxSteps}
+        <p style="color: red;">Maximum of {maxSteps} steps reached</p>
     {/if}
 </div>
 

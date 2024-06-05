@@ -9,7 +9,7 @@
     console.log("id: +page.svelte");
     console.log(recipe?.title);
     */
-</script>
+    </script>
 
 <svelte:head>
     <title>{recipe.title}</title>

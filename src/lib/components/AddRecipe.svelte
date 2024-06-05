@@ -9,11 +9,10 @@
 
     let title = '';
     let description = '';
-    let ingredients = '';
-    let instructions = '';
     let image = null;
     let user_id = null;
     let imagePreview = null;
+    let errorMessage = '';
 
     const handleFileChange = (event) => {
         image = event.target.files[0];
@@ -41,13 +40,25 @@
             console.error('User not logged in');
             user_id = null;
         }
-        console.log("ADDRECIPE" + user_id)
+        console.log("ADDRECIPE" + user_id);
     });
 
     const addRecipe = async () => {
+        const steps = get(stepsStore);
+        const ingredients = get(ingredientsStore).map(({ ingredient_name, unit, amount }) => [ingredient_name, unit, amount]);
+
+        if (ingredients.length === 0) {
+            errorMessage = 'Please add at least one ingredient.';
+            return;
+        }
+        
+        if (steps.length === 0) {
+            errorMessage = 'Please add at least one instruction step.';
+            return;
+        }
+
         let image_url = null;
         if (image) {
-
             const filePath = `public/${user_id}` + "/" + `${title}`;
             const file = image;
 
@@ -62,18 +73,12 @@
             image_url = url.publicUrl;
         }
 
-        const steps = get(stepsStore);
-        const ingredients = get(ingredientsStore).map(({ ingredient_name, unit, amount }) => [ingredient_name, unit, amount]);;
-
-        console.log(steps)
-        console.log(ingredients)
-
         const { error } = await supabase.from('recipes').insert([
             {
                 user_id,
                 title,
                 description,
-                ingredients: ingredients,
+                ingredients,
                 instructions: steps,
                 image_url
             }
@@ -89,11 +94,11 @@
 </script>
 
 <form on:submit|preventDefault={addRecipe}>
-    <input type="text" bind:value={title} placeholder="Title" required maxlength="100"/>
+    <input type="text" bind:value={title} placeholder="Title" required maxlength="50"/>
     <textarea bind:value={description} placeholder="Description" required maxlength="500"></textarea>
 
     <Ingredients/>
-    
+
     <Instructions/>
 
     {#if imagePreview}
@@ -102,6 +107,9 @@
 
     <input type="file" on:change={handleFileChange} required/>
     <button type="submit">Add Recipe</button>
+    {#if errorMessage}
+        <p style="color: red;">{errorMessage}</p>
+    {/if}
 </form>
 
 <style>
