@@ -9,6 +9,7 @@
 </div>
 
 <style>
+
   body {
     margin: 0;
     overflow-x: hidden;
@@ -41,4 +42,5 @@
     filter: blur(10px);
     z-index: -1;
   }
+
 </style>

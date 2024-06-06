@@ -1,3 +1,112 @@
+:root {
+    --prim1: #F2B255;
+    --prim2: #d3823f;
+
+    --prim3: #d3823f83;
+
+    --sec2: white;
+
+    --text1: #C5EBF3;
+
+
+    --gradient1: linear-gradient(to right, var(--prim1), var(--sec2));
+
+    /*
+    --gradient1: linear-gradient(to right, #97e75b, #1ab63e);
+    */
+}
+
+.normal {
+    font-weight: 400;
+}
+.bold {
+    font-weight: 700;
+}
+.extra-bold {
+    font-weight: 900;
+}
+.italic {
+    font-style: italic;
+    font-weight: 400; /* Regular italic */
+}
+.bold-italic {
+    font-style: italic;
+    font-weight: 700;
+}
+.extra-bold-italic {
+    font-style: italic;
+    font-weight: 900;
+}
+
+#website-title {
+    background-color: var(--sec2);
+    color: var(--prim2);
+    font-size: 2rem;
+    text-align: center;
+    padding: 1rem;
+}
+
+.layout-header {
+    background-color: var(--prim2);;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    text-align: center;
+    font-size: 1rem;
+
+    /*padding: 1rem;*/
+    top: 0;
+    position: sticky;
+}
+
+.layout-header nav {
+    /*padding: 1rem;*/
+    display: flex;
+    justify-content: center;
+    
+    /*gap: 20px;*/
+}
+
+.layout-header a {
+    color: var(--sec2);
+    text-decoration: none;
+    /*font-weight: bold;*/
+    transition: background-color 0.3s;
+    padding: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.layout-header a:hover {
+    background-color: gray;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.layout-footer {
+    background-color: var(--sec2);
+    color: var(--prim2);
+
+    text-align: center;
+    padding: 1rem;
+    width: 100%;
+    position: relative;
+}
+
+main { /* necessary for taking up all space between header and footer!*/
+    flex: 1;
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /*background: var(--gradient1);*/
+    color: white;
+}
+
 .recipes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -11,7 +120,7 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /*transition: transform 0.2s;*/
+    transition: transform 0.2s;
 }
 
 .recipe-card:hover {
@@ -31,7 +140,7 @@
     font-size: 1.2rem;
     color: black;
 }
-
+/*
 .logout {
     align-self: center;
 
@@ -109,6 +218,19 @@
     flex: 1;
 }
 
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    margin: 0;
+}
+
+main {
+    min-height: 100%;
+}
+
 .mainContainer {
     min-height: 100vh;
     background: linear-gradient(to right, #97e75b, #1ab63e);
@@ -116,7 +238,7 @@
     position: relative;
     display: felx;
     flex-direction: column;
-    /*overflow-x: hidden;*/
+    //overflow-x: hidden;
 }
 
 .layout-footer {
@@ -140,7 +262,7 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /*transition: transform 0.2s;*/
+    //transition: transform 0.2s;
     overflow: hidden;
 }
 /*
@@ -148,6 +270,7 @@
     transform: translateY(-5px);
 }
 */
+/*
 .recipe-card img {
     width: 100%;
     height: auto;
@@ -181,3 +304,4 @@
 a {
     text-decoration:none;
 }
+*/

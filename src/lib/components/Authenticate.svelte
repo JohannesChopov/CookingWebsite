@@ -129,6 +129,7 @@
     {/if}
 {/if}
 
+
 <style>
     .authContainer {
         display: flex;

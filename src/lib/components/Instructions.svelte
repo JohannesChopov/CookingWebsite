@@ -1,21 +1,25 @@
 <script>
+    import { text } from '@sveltejs/kit';
     import { stepsStore } from '../../stores/StepStore';
     import { get } from 'svelte/store';
 
     let stepInput = '';
     const maxSteps = 20;
+    const maxStepLength = 400;
 
     $: steps = get(stepsStore);
 
     const addStep = () => {
-        if (stepInput.trim() !== '' && steps.length < maxSteps) {
+        if (stepInput.trim() !== '' && steps.length < maxSteps && text.length <= maxStepLength) {
             stepsStore.update(steps => [...steps, stepInput]);
             stepInput = '';
         }
     };
 
     const updateStep = (index, text) => {
-        stepsStore.update(steps => steps.map((step, i) => i === index ? text : step));
+        if (text.length <= maxStepLength) {
+            stepsStore.update(steps => steps.map((step, i) => i === index ? text : step));
+        }
     };
 
     const removeStep = (index) => {
@@ -29,14 +33,26 @@
         {#each $stepsStore as text, index}
             <div class="step-item">
                 <label for="step-{index}">Step {index + 1}: </label>
-                <input id="step-{index}" type="text" bind:value={$stepsStore[index]} on:input={(e) => updateStep(index, e.target.value)} />
+                <input 
+                    id="step-{index}" 
+                    type="text" 
+                    bind:value={$stepsStore[index]} 
+                    on:input={(e) => updateStep(index, e.target.value)} 
+                    maxlength={maxStepLength}
+                />
                 <button type="button" on:click={() => removeStep(index)}>Remove</button>
             </div>
         {/each}
     </div>
     <div class="add-step">
         <label for="step-input">Step {$stepsStore.length + 1}: </label>
-        <input id="step-input" type="text" bind:value={stepInput} placeholder="Add a step..." />
+        <input 
+            id="step-input" 
+            type="text" 
+            bind:value={stepInput} 
+            placeholder="Add a step..." 
+            maxlength={maxStepLength}
+        />
         <button type="button" on:click={addStep} disabled={$stepsStore.length >= maxSteps}>+</button>
     </div>
     {#if $stepsStore.length >= maxSteps}

@@ -1,8 +1,11 @@
 <div class="mainContainer">
+    <h1 id="website-title" class="bold-italic"> 
+        RecipeGram
+    </h1>
     <header class="layout-header">
         <nav>
             <a href="/">Home</a>
-            <a href="/recipes">Recipes</a>
+            <a href="/recipes">Explore Recipes</a>
             <a href="/login">Profile</a>
             <a href="/about">About</a>
         </nav>
@@ -10,7 +13,18 @@
     <main>
         <slot/>
     </main>
-    <footer class="layout-footer">Extra info</footer>
+    <footer class="layout-footer">
+        <div class="footer-grid">
+            <div class="footer-name">RecipeGram</div>
+            <div class="footer-link">
+                <a href="/contact">Contact Us</a>
+            </div>
+            <div class=""></div>
+        </div>
+        
+        Extra info
+        Contact Us
+    </footer>
 </div>
 
 <script>

@@ -109,8 +109,8 @@
 </script>
 
 <form on:submit|preventDefault={addRecipe}>
-    <input type="text" bind:value={title} placeholder="Title" required maxlength="50"/>
-    <textarea bind:value={description} placeholder="Description" required maxlength="500"></textarea>
+    <input type="text" bind:value={title} placeholder="Title" required maxlength="30"/>
+    <textarea bind:value={description} placeholder="Description" required maxlength="300"></textarea>
 
     <Ingredients/>
 
