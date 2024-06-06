@@ -92,11 +92,8 @@
                     getRecipes(user_id)
                     //recipes = recipes.filter(recipe => recipe.id !== recipeId);
                 }
-
             }
-
         }
-        
     };
 
     const editRecipe = async (id) => {
@@ -105,6 +102,7 @@
     };
 
 </script>
+
 {#if isEditing}
     <ModifyRecipe {editingRecipeId} />
 {:else}
@@ -114,14 +112,113 @@
     {#each recipes as { id, title, description, image_url }}
         <div class="recipe-card">
             <a href={`/recipes/${id}`}>
-                <img class="recipe-image" src={image_url} alt={title} />
-                <div class="recipe-name">{title}</div>
-                <p>{description}</p>
+                <div class="recipe-card-image-container">
+                    <img class="recipe-card-image" src={image_url} alt={title} />
+                </div>
+                <div class="recipe-card-name">{title}</div>
             </a>
             <grid class="button-grid">
-                <button on:click={() => editRecipe(id)} class="edit-button">Edit</button>
-                <button on:click={() => deleteRecipe(id, image_url)} class="delete-button">Remove</button>
+                <button on:click={() => editRecipe(id)} class="edit-button">
+                    <i class="material-icons">edit</i>
+                </button>
+                <button on:click={() => deleteRecipe(id, image_url)} class="delete-button">
+                    <i class="material-icons">delete</i>
+                </button>
             </grid>
         </div>
     {/each}
 </div>
+
+<style>
+    .recipes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+        padding: 16px;
+        overflow-y: auto;
+    }
+
+    .recipe-card {
+        background: var(--prim2);
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        overflow: hidden;
+    }
+    
+    .recipe-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .recipe-card-image-container {
+        width: 100%;
+        height: 200px;
+        background: lightgray;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .recipe-card-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .recipe-card-name {
+        padding: 10px;
+        font-size: 1.2rem;
+        text-align: center;
+        font-weight: bold;
+
+    }
+
+    .recipe-card p {
+        padding: 0 10px 10px;
+        font-size: 0.7rem;
+        color: white;
+        text-align: center;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .button-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
+        
+    }
+    .delete-button {
+        background: red;
+        color: white;
+        border: none;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 15px;
+    }
+
+    .delete-button:hover {
+        background: darkred;
+    }
+
+    .edit-button {
+        background: green;
+        color: white;
+        border: none;
+        padding: 5px;
+        
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 15px;
+    }
+
+    .edit-button:hover {
+        background: darkgreen;
+    }
+
+</style>

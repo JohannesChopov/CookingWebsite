@@ -94,7 +94,7 @@
 {:else}
     {#if user}
         <div class="authContainer">
-            <p>Signed in as {user.email}</p>
+            <p>You are currently signed in with {user.email}</p>
             <button class="logout" on:click={signOut}>{'SignOut'}</button>
         </div>
     {:else}
@@ -131,6 +131,11 @@
 
 
 <style>
+    p {
+        color: black;
+        font-size: 2rem;   
+    }
+
     .authContainer {
         display: flex;
         flex-direction: column;

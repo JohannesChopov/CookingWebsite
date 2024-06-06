@@ -16,6 +16,21 @@
     */
 }
 
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 10px; 
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
 .normal {
     font-weight: 400;
 }
@@ -86,13 +101,33 @@ html, body {
 }
 
 .layout-footer {
-    background-color: var(--sec2);
+    background-color: lightgray;
     color: var(--prim2);
 
     text-align: center;
     padding: 1rem;
     width: 100%;
     position: relative;
+}
+
+.footer-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 1rem;
+    font-size: 1.5rem;
+}
+
+.footer-link {
+    text-decoration: none;
+}
+
+#contact-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+#contact-link:hover {
+    color: white;
 }
 
 main { /* necessary for taking up all space between header and footer!*/
@@ -106,7 +141,7 @@ main { /* necessary for taking up all space between header and footer!*/
     /*background: var(--gradient1);*/
     color: white;
 }
-
+/*
 .recipes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -140,7 +175,7 @@ main { /* necessary for taking up all space between header and footer!*/
     font-size: 1.2rem;
     color: black;
 }
-/*
+
 .logout {
     align-self: center;
 

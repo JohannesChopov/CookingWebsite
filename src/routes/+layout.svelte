@@ -7,6 +7,7 @@
             <a href="/">Home</a>
             <a href="/recipes">Explore Recipes</a>
             <a href="/login">Profile</a>
+            <a href="/contact">Contact</a>
             <a href="/about">About</a>
         </nav>
     </header>
@@ -15,15 +16,11 @@
     </main>
     <footer class="layout-footer">
         <div class="footer-grid">
-            <div class="footer-name">RecipeGram</div>
+            <div id="footer-name" class="bold-italic">RecipeGram</div>
             <div class="footer-link">
-                <a href="/contact">Contact Us</a>
+                <a id="contact-link" class="normal" href="/contact">Contact Us</a>
             </div>
-            <div class=""></div>
         </div>
-        
-        Extra info
-        Contact Us
     </footer>
 </div>
 
