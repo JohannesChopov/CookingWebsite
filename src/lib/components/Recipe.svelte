@@ -1,3 +1,63 @@
+<!--
+<script>
+    import FullScreenImage from './FullScreenImage.svelte';
+  
+    export let recipe = {
+      created_at: null,
+      user: { email: '' },
+      title: '',
+      description: '',
+      ingredients: [],
+      instructions: [],
+      image_url: ''
+    };
+  </script>
+  
+  <FullScreenImage imageUrl={recipe.image_url} />
+  
+  <section class="recipe-details">
+    <h1>{recipe.title}</h1>
+    <p>Created at: {recipe.created_at ?? ''}</p>
+    <p>Creator: {recipe.user.email ?? 'Unknown'}</p>
+    <p>Description: {recipe.description ?? ''}</p>
+    <h2>Ingredients:</h2>
+    <ul>
+      {#each recipe.ingredients as [ingredient_name, unit, amount]}
+        <li>{amount} {unit || ''} {ingredient_name}</li>
+      {/each}
+    </ul>
+    <h2>Instructions:</h2>
+    <ul>
+      {#each recipe.instructions as instruction, index}
+        <li>Step {index + 1}: {instruction}</li>
+      {/each}
+    </ul>
+  </section>
+  
+  <style>
+    .recipe-details {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 80%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  
+    h1, h2 {
+      color: #1ab63e;
+    }
+  
+    p, li {
+      color: #333;
+    }
+  </style>
+  
+-->
+
 <script>
     import { ingredientsStore } from "../../stores/IngredientStore";
     import Ingredients from "./Ingredients.svelte";
@@ -12,16 +72,8 @@
         image_url: ''
     };
     
-    const getWindowSize = () => {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        console.log(`Width: ${width}, Height: ${height}`);
-        return { width, height };
-    }   
-
-    //getWindowSize();
-
-    //window.addEventListener('resize', getWindowSize);
+    const width = window.innerWidth;
+    const height = window.innerHeight;
     
 </script>
 
@@ -47,7 +99,7 @@
                     {/each}
                 </ul>
             </dd>
-            <!--
+            
             <dd>
                 <ul>
                     {#each recipe.ingredients as ingredient}
@@ -55,7 +107,6 @@
                     {/each}
                 </ul>
             </dd>
-            -->
             <dt>instructions</dt>
             <dd>
                 <ul>
@@ -132,4 +183,3 @@
         color: #555;
     }
 </style>
-

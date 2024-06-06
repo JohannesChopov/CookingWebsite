@@ -116,6 +116,7 @@
     position: relative;
     display: felx;
     flex-direction: column;
+    /*overflow-x: hidden;*/
 }
 
 .layout-footer {
