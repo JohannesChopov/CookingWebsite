@@ -85,7 +85,7 @@
             }
             const { data: url } = await supabase.storage.from('recipe-images').getPublicUrl(filePath);
 
-            image_url = url.publicUrl;
+            image_url = `${url.publicUrl}?t=${new Date().getTime()}`;
         }
 
         const { error } = await supabase.from('recipes').insert([
@@ -108,18 +108,25 @@
     };
 </script>
 
-<form on:submit|preventDefault={addRecipe}>
+<form lang="en" on:submit|preventDefault={addRecipe} >
+
+    <h2>Give Your Recipe a Title</h2>
     <input type="text" bind:value={title} placeholder="Title" required maxlength="30"/>
+
+    <h2>Give Your Recipe a Description</h2>
     <textarea bind:value={description} placeholder="Description" required maxlength="300"></textarea>
 
+    <h2>Add the Recipe Ingredients</h2>
     <Ingredients/>
 
+    <h2>Add the Recipe Instructions</h2>
     <Instructions/>
 
     {#if imagePreview}
         <img src={imagePreview} alt="Image preview" style="max-width: 100%; height: auto;" />
     {/if}
 
+    <h2>Choose an Image For Your Recipe</h2>
     <input type="file" on:change={handleFileChange} required/>
     <button type="submit">Add Recipe</button>
     {#if errorMessage}
@@ -128,6 +135,11 @@
 </form>
 
 <style>
+
+    h2 {
+        color: black;
+    }
+
     form {
         max-width: 600px;
         margin: 0 auto;

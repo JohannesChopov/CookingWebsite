@@ -106,45 +106,85 @@
 {#if isEditing}
     <ModifyRecipe {editingRecipeId} />
 {:else}
+    <div class="user-recipes">
+        <h1 class="bold">Your Recipes</h1>
+        <div class="recipes-grid">
+            {#each recipes as { id, title, description, image_url }}
+                <div class="recipe-card">
+                    <a href={`/recipes/${id}`}>
+                        <div class="recipe-card-image-container">
+                            <img class="recipe-card-image" src={image_url} alt={title} />
+                        </div>
+                        <div class="recipe-card-name">{title}</div>
+                    </a>
+                    <grid class="button-grid">
+                        <button on:click={() => editRecipe(id)} class="edit-button">
+                            <i class="material-icons">edit</i>
+                        </button>
+                        <button on:click={() => deleteRecipe(id, image_url)} class="delete-button">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    </grid>
+                </div>
+            {/each}
+        </div>
+    </div>
+
+    <div class="add-recipe-container">
+        <h1 class="bold"> Not Enough?</h1>
+        <h1 class="bold"> Add more</h1>
+    </div>
     <AddRecipe/>
 {/if}
-<div class="recipes-grid">
-    {#each recipes as { id, title, description, image_url }}
-        <div class="recipe-card">
-            <a href={`/recipes/${id}`}>
-                <div class="recipe-card-image-container">
-                    <img class="recipe-card-image" src={image_url} alt={title} />
-                </div>
-                <div class="recipe-card-name">{title}</div>
-            </a>
-            <grid class="button-grid">
-                <button on:click={() => editRecipe(id)} class="edit-button">
-                    <i class="material-icons">edit</i>
-                </button>
-                <button on:click={() => deleteRecipe(id, image_url)} class="delete-button">
-                    <i class="material-icons">delete</i>
-                </button>
-            </grid>
-        </div>
-    {/each}
-</div>
+
 
 <style>
+    .add-recipe-container h1{
+        color: var(--prim2);
+
+        display: flex;
+
+        justify-content: center; 
+        align-items: center;
+
+        padding: 2rem;
+    }
+
+    .user-recipes {
+        background-color: var(--prim2);
+
+    }
+
+    .user-recipes h1 {
+        color: white;
+
+        display: flex;
+
+        justify-content: center; 
+        align-items: center;
+
+        padding: 2rem;
+    } 
+
     .recipes-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: 16px;
         padding: 16px;
         overflow-y: auto;
+
+        padding-bottom: 2rem;
     }
 
     .recipe-card {
-        background: var(--prim2);
+        color: var(--prim2);
+        background: white;
         border: 1px solid #ccc;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         transition: transform 0.2s;
         overflow: hidden;
+        position: relative;
     }
     
     .recipe-card:hover {
@@ -159,6 +199,24 @@
         align-items: center;
         justify-content: center;
         overflow: hidden;
+        position: relative;
+    }
+
+    .recipe-card-image-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.5)),
+                    linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.5)),
+                    linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.5)),
+                    linear-gradient(270deg, transparent, rgba(0, 0, 0, 0.5));
+        mask-image: radial-gradient(circle, transparent 70%, black 100%);
+        mask-composite: intersect;
+        pointer-events: none;
+        z-index: 1;
     }
 
     .recipe-card-image {
@@ -172,7 +230,6 @@
         font-size: 1.2rem;
         text-align: center;
         font-weight: bold;
-
     }
 
     .recipe-card p {

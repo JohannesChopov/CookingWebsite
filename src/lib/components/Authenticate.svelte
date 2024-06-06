@@ -133,7 +133,8 @@
 <style>
     p {
         color: black;
-        font-size: 2rem;   
+        font-size: 2rem;
+        padding: 4rem;   
     }
 
     .authContainer {

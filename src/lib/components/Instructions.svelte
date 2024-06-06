@@ -28,7 +28,6 @@
 </script>
 
 <div class="steps-container">
-    <h2>Add Recipe Instructions</h2>
     <div class="steps-list">
         {#each $stepsStore as text, index}
             <div class="step-item">
@@ -40,7 +39,9 @@
                     on:input={(e) => updateStep(index, e.target.value)} 
                     maxlength={maxStepLength}
                 />
-                <button type="button" on:click={() => removeStep(index)}>Remove</button>
+                <button type="button" on:click={() => removeStep(index)}>
+                    <i class="material-icons">delete</i>
+                </button>
             </div>
         {/each}
     </div>
@@ -53,10 +54,12 @@
             placeholder="Add a step..." 
             maxlength={maxStepLength}
         />
-        <button type="button" on:click={addStep} disabled={$stepsStore.length >= maxSteps}>+</button>
+        <button type="button" on:click={addStep} disabled={$stepsStore.length >= maxSteps}>
+            <i class="material-icons">add</i>
+        </button>
     </div>
     {#if $stepsStore.length >= maxSteps}
-        <p style="color: red;">Maximum of {maxSteps} steps reached</p>
+        <p>Maximum of {maxSteps} steps reached</p>
     {/if}
 </div>
 
@@ -65,26 +68,35 @@
         color: black;
     }
     p {
-        color: green;
+        color: red;
+    }
+    .steps-container {
+        margin: 20px 0;
     }
     label {
         color: black;
     }
 
-    .steps-container {
-        margin: 20px 0;
+    .step-item label {
+        margin: 1rem;
     }
+
+    /*
     .steps-list {
         margin-bottom: 10px;
     }
+    */
+
     .step-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 5px;
+        margin: 1rem;
     }
     .step-item input {
         flex: 1;
+        margin: 1rem;
     }
     .step-item button {
         background-color: red;
@@ -93,18 +105,24 @@
         padding: 5px 10px;
         cursor: pointer;
         border-radius: 5px;
+        margin: 1rem;
     }
     .step-item button:hover {
         background-color: darkred;
     }
+
+    .add-step label {
+        margin: 1rem;
+    }
+
     .add-step {
         display: flex;
         align-items: center;
-        gap: 10px;
-        margin-bottom: 10px;
+        margin: 1rem;
     }
     .add-step input {
         flex: 1;
+        margin: 1rem;
     }
     .add-step button {
         background-color: green;
@@ -113,6 +131,7 @@
         padding: 5px 10px;
         cursor: pointer;
         border-radius: 5px;
+        margin: 1rem;
     }
     .add-step button:hover {
         background-color: darkgreen;

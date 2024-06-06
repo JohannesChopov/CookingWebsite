@@ -71,6 +71,8 @@
     /*padding: 1rem;*/
     top: 0;
     position: sticky;
+
+    z-index: 1000;
 }
 
 .layout-header nav {
@@ -98,6 +100,8 @@
 html, body {
     height: 100%;
     margin: 0;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 .layout-footer {
