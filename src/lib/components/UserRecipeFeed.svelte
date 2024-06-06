@@ -10,7 +10,7 @@
     let isEditing = false;
     let editingRecipeId = null;
 
-
+    /*
     onMount(async () => {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
@@ -20,6 +20,21 @@
             
         } else {
             console.error('User not logged in');
+        }
+    });
+    */
+
+    onMount(async () => {
+        const data  = localStorage.getItem('userID');
+
+        console.log(data)
+
+        if (data !== null) {
+            user_id = data;
+            getRecipes(user_id)
+        } else {
+            console.error('User not logged in');
+            user_id = null;
         }
     });
 

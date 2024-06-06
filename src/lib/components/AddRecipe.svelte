@@ -33,6 +33,20 @@
     };
 
     onMount(async () => {
+        const data  = localStorage.getItem('userID');
+
+        console.log(data)
+
+        if (data !== null) {
+            user_id = data;
+        } else {
+            console.error('User not logged in');
+            user_id = null;
+        }
+    });
+
+    /*
+    onMount(async () => {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
             user_id = session.user.id;
@@ -42,6 +56,7 @@
         }
         console.log("ADDRECIPE" + user_id);
     });
+    */
 
     const addRecipe = async () => {
         const steps = get(stepsStore);

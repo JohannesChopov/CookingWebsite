@@ -23,29 +23,31 @@
         }
     };
     
+    
     // Listen for auth state changes
     onMount(() => {
         const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
             user = session?.user || null;
             loading = false;
+            //localStorage.setItem('userID', user.id);
         });
-        
+
         // Clean up listener on component unmount
-        /*
         return () => {
-            authListener.unsubscribe();
+            authListener?.subscription?.unsubscribe();
         };
-        */
     });
+    
     
     onMount(async () => {
         const { data: { session } } = await supabase.auth.getSession();
         user = session?.user || null;
         
-        localStorage.setItem('userID', user.id);
-        
         loading = false;
+
+        localStorage.setItem('userID', user.id);
     });
+    
     
 
     const handleAuth = async (event) => {
@@ -68,7 +70,6 @@
 
         const { user, session, error: authError } = authResponse;
 
-        console.log(user)
 
         if (authError) {
             error = authError.message;

@@ -36,6 +36,8 @@
         
     })
     */
+
+
     onMount(async () => {
         const { data: { session } } = await supabase.auth.getSession();
         user = session?.user || null;

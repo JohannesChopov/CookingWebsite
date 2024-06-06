@@ -16,7 +16,7 @@
     });
 </script>
 
-<Authenticate/>
+<Authenticate {user}/>
 
 {#if user}
     <UserRecipeFeed/>
