@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { supabase } from '$lib/supabase';
+    import UserRecipeFeed from './UserRecipeFeed.svelte';
 
     export let user: any = null;
     let loading = true;
@@ -29,7 +30,10 @@
         const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
             user = session?.user || null;
             loading = false;
-            //localStorage.setItem('userID', user.id);
+            
+            if (user) {
+                localStorage.setItem('userID', user.id);
+            }
         });
 
         // Clean up listener on component unmount
@@ -45,7 +49,9 @@
         
         loading = false;
 
-        localStorage.setItem('userID', user.id);
+        if (user) {
+            localStorage.setItem('userID', user.id);
+        }
     });
     
     
@@ -75,8 +81,8 @@
             error = authError.message;
         } else {
             // Redirect or perform further actions after successful auth
-            //window.location.href = "/";
-            window.location.reload();
+            //window.location.reload();
+            //window.location.href = "/recipes";
         }
     };
 
@@ -93,9 +99,17 @@
     <p>Loading...</p>
 {:else}
     {#if user}
-        <div class="authContainer">
+        <div class="loggedInContainer">
             <p>You are currently signed in with {user.email}</p>
-            <button class="logout" on:click={signOut}>{'SignOut'}</button>
+        </div>
+        <UserRecipeFeed/>
+        <div class="logoutContainer">
+            <h2>
+                Want to log out?
+            </h2>
+            <button class="logout" on:click={signOut}>
+                <i class="material-icons">logout</i>
+            </button>
         </div>
     {:else}
         <div class="authContainer">
@@ -131,13 +145,123 @@
 
 
 <style>
+
+    .authContainer label {
+        color:black;
+    }
+
+    .authContainer {
+
+        color: black;
+
+        margin: 3rem auto;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        padding: 24px;
+        width: 100%;
+        max-width: 400px;
+        background: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 16px;
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    input {
+        color: black;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    button {
+        padding: 12px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+
+    .error {
+        color: red;
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .logoutContainer {
+        color: white;
+        background-color: var(--prim2);
+        padding: 5rem;
+
+        display: flex;
+
+        flex-direction: column;
+        align-items: center;
+
+        gap: 3rem;
+    }
+
+    .logout {
+        padding: 10px 20px;
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        }
+
+    .logout:hover {
+        background-color: darkred;
+    }
+
     p {
         color: black;
         font-size: 2rem;
         padding: 4rem;   
     }
 
-    .authContainer {
+    .loggedInContainer {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -145,6 +269,7 @@
         flex: 1;
         padding: 24px;
     }
+
     form {
         display: flex;
         flex-direction: column;
@@ -152,6 +277,7 @@
         width: 400px;
         max-width: 100%;
         margin: 0 auto;
+        
     }
 
     h1 {
@@ -163,13 +289,13 @@
         width: 100%;
         border: none;
         background: transparent;
-        color: white;
+        color: black;
         padding: 14px;
     }
 
     form label {
         position: relative;
-        border: 1px solid white;
+        border: 1px solid gray;
         border-radius: 5px;
     }
 

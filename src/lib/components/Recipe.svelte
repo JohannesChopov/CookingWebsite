@@ -1,6 +1,5 @@
 
 <script>
-    import FullScreenImage from './FullScreenImage.svelte';
     import {onMount} from 'svelte'
 
     export let recipe = {

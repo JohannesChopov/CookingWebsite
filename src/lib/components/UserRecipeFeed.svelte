@@ -185,6 +185,13 @@
         transition: transform 0.2s;
         overflow: hidden;
         position: relative;
+
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-all;
+
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .recipe-card:hover {

@@ -18,10 +18,11 @@
 
 <Authenticate {user}/>
 
+<!--
 {#if user}
     <UserRecipeFeed/>
 {:else}
     <p style="align: center">Please log in to add a recipe.</p>
 {/if}
-
+-->
 

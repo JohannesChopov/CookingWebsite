@@ -142,7 +142,7 @@
 
     form {
         max-width: 600px;
-        margin: 0 auto;
+        margin: 3rem auto;
         padding: 20px;
         background: #f9f9f9;
         border-radius: 8px;

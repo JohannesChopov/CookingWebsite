@@ -139,29 +139,50 @@
     onMount(loadRecipe);
 </script>
 
-<form on:submit|preventDefault={updateRecipe}>
-    <input type="text" bind:value={newtitle} placeholder="Title" required maxlength="50"/>
-    <textarea bind:value={description} placeholder="Description" required maxlength="500"></textarea>
+<div class="form-container">
+    <h1>Modify Your Recipe</h1>
+    <form on:submit|preventDefault={updateRecipe}>
+        <input type="text" bind:value={newtitle} placeholder="Title" required maxlength="50"/>
+        <textarea bind:value={description} placeholder="Description" required maxlength="500"></textarea>
 
-    <Ingredients/>
+        <Ingredients/>
 
-    <Instructions/>
+        <Instructions/>
 
-    {#if imagePreview}
-        <img src={imagePreview} alt="Image preview" style="max-width: 100%; height: auto;" />
-    {/if}
+        {#if imagePreview}
+            <img src={imagePreview} alt="Image preview" style="max-width: 100%; height: auto;" />
+        {/if}
 
-    <input type="file" on:change={handleFileChange}/>
-    <button type="submit">Update Recipe</button>
-    {#if errorMessage}
-        <p style="color: red;">{errorMessage}</p>
-    {/if}
-</form>
+        <input type="file" on:change={handleFileChange}/>
+        <button type="submit">Update Recipe</button>
+        {#if errorMessage}
+            <p style="color: red;">{errorMessage}</p>
+        {/if}
+    </form>
+</div>
 
 <style>
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background-color: #f9f9f9; 
+        border-radius: 8px; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        display: flex;
+        color: var(--prim2);
+        text-align: center;
+    }
+
     form {
         max-width: 600px;
-        margin: 0 auto;
+        margin: 3rem auto;
         padding: 20px;
         background: #f9f9f9;
         border-radius: 8px;
