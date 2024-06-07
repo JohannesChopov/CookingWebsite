@@ -61,14 +61,14 @@
     .links-grid {
         display: flex;
         justify-content: center;
-        gap: 2rem;
+        gap: 4rem;
         padding: 1rem;
     }
 
     .iconlink {
         text-decoration: none;
         color: var(--prim2);
-        font-size: 1.2rem;
+        font-size: 3rem;
         transition: color 0.3s;
     }
 
@@ -86,7 +86,7 @@
     .icons a {
         font-size: 2rem;
         color: var(--prim2);
-        transition: color 0.3s;
+        transition: color;
     }
 
     .icons a:hover {
@@ -114,6 +114,8 @@
         padding: 2rem;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        width: 30%;
     }
 
     h1 {
@@ -126,7 +128,7 @@
         flex-direction: column;
 
         width: 100%;
-        max-width: 400px;
+        max-width: 600px;
 
         justify-content: center; 
         align-items: center;

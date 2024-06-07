@@ -36,7 +36,7 @@
             }
         });
 
-        // Clean up listener on component unmount
+        
         return () => {
             authListener?.subscription?.unsubscribe();
         };
