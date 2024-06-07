@@ -11,10 +11,11 @@
     */
     </script>
 
+<!--
 <svelte:head>
     <title>{recipe.title}</title>
 </svelte:head>
-
+-->
 {#if recipe}
     <Recipe {recipe} />
 {:else}

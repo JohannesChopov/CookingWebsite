@@ -90,7 +90,7 @@
                 return;
             }
 
-            // Upload the new image
+            //new image
             const filePath = `public/${user_id}/${newtitle}`;
             const { data, error } = await supabase.storage.from('recipe-images').upload(filePath, image);
 
@@ -101,7 +101,7 @@
 
             const { data: url } = await supabase.storage.from('recipe-images').getPublicUrl(filePath);
             image_url = `${url.publicUrl}?t=${new Date().getTime()}`;
-            console.log(image_url)
+            //console.log(image_url)
         }
 
         const updatedRecipe = {
@@ -112,14 +112,14 @@
             image_url
         };
 
-        console.log('Updated Recipe:', updatedRecipe);
+        //console.log('Updated Recipe:', updatedRecipe);
 
         const { error } = await supabase.from('recipes').update(updatedRecipe).eq('id', editingRecipeId);
 
         if (error) {
             console.error('Error updating recipe:', error);
         } else {
-            console.log("Recipe updated");
+            //console.log("Recipe updated");
 
             ingredientsStore.set([]);
             stepsStore.set([]);
@@ -162,7 +162,7 @@
 </div>
 
 <style>
-
+    
     .form-container {
         display: flex;
         flex-direction: column;
@@ -224,5 +224,5 @@
 
     button:hover {
         background-color: #218838;
-    }
+    }  
 </style>

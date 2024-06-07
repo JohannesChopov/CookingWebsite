@@ -12,7 +12,7 @@
     let error = "";
     let isRegistering = false;
 
-    // Sign out function
+    
     const signOut = async () => {
         const { error: signOutError } = await supabase.auth.signOut();
         if (signOutError) {
@@ -25,7 +25,7 @@
     };
     
     
-    // Listen for auth state changes
+    // for auth state changes
     onMount(() => {
         const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
             user = session?.user || null;
@@ -67,10 +67,10 @@
 
         let authResponse;
         if (isRegistering) {
-            // Handle user registration
+            //user registration
             authResponse = await supabase.auth.signUp({ email, password });
         } else {
-            // Handle user login
+            //user login
             authResponse = await supabase.auth.signInWithPassword({ email, password });
         }
 
@@ -80,7 +80,7 @@
         if (authError) {
             error = authError.message;
         } else {
-            // Redirect or perform further actions after successful auth
+            
             //window.location.reload();
             //window.location.href = "/recipes";
         }

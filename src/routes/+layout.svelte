@@ -1,3 +1,7 @@
+<svelte:head>
+    <title>{"RecipeGram"}</title>
+</svelte:head>
+
 <div class="mainContainer">
     <h1 id="website-title" class="bold-italic"> 
         RecipeGram
@@ -30,8 +34,12 @@
 
     import {invalidate} from '$app/navigation'
     import {onMount} from 'svelte'
+    import { supabase } from '$lib/supabase';
 
     export let data
+
+    let user
+
     /*
     let { supabase, session} = data
     $: ({supabase, session} = data)

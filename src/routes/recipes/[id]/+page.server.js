@@ -1,14 +1,3 @@
-
-//import { supabase } from '$lib/supabase';
-
-///** @type {import('./$types').PageServerLoad} **/
-//export async function load({params}) {
-//    const recipe = await supabase.from('recipes').select().eq('id', params.id)
-//    return {
-//        recipe: JSON.stringify(recipe.data[0])
-//    };
-//};
-
 import { supabase } from '$lib/supabase';
 
 /** @type {import('./$types').PageServerLoad} */

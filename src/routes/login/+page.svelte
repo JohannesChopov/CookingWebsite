@@ -12,17 +12,10 @@
     onMount(async () => {
         const { data: { session } } = await supabase.auth.getSession();
         user = session?.user || null;
-        console.log(user)
+        //console.log(user)
     });
 </script>
 
 <Authenticate {user}/>
 
-<!--
-{#if user}
-    <UserRecipeFeed/>
-{:else}
-    <p style="align: center">Please log in to add a recipe.</p>
-{/if}
--->
 

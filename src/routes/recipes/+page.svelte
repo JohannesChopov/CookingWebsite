@@ -6,14 +6,10 @@
     export let data;
     const recipes = JSON.parse(data.recipes)
 
-    console.log("dit zijn de recepten")
-    console.log(recipes)
+    //console.log("dit zijn de recepten")
+    //console.log(recipes)
 
 
 </script>
 
 <RecipeFeed {recipes}/>
-
-<svelte:head>
-    <title>Recipes</title>
-</svelte:head>

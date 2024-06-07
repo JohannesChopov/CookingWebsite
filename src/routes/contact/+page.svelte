@@ -1,78 +1,3 @@
-
-<!--
-<script>
-    let name = '';
-    let email = '';
-    let message = '';
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Handle form submission logic here
-        console.log('Form submitted:', { name, email, message });
-        name = '';
-        email = '';
-        message = '';
-    };
-</script>
-
-<div class="contact-container">
-    <h1>Contact Us</h1>
-    <form on:submit={handleSubmit}>
-        <label for="name">Name:</label>
-        <input type="text" id="name" bind:value={name} required />
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" bind:value={email} required />
-
-        <label for="message">Message:</label>
-        <textarea id="message" bind:value={message} required></textarea>
-
-        <button type="submit">Send</button>
-    </form>
-</div>
-
-<style>
-    .contact-container {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-        background: #f9f9f9;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    form {
-        display: flex;
-        flex-direction: column;
-    }
-    label {
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-    input, textarea {
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-    button {
-        padding: 10px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 1rem;
-    }
-    button:hover {
-        background-color: #218838;
-    }
-</style>
--->
-
 <script>
 
     import Authenticate from "$lib/components/Authenticate.svelte";
@@ -91,7 +16,7 @@
         if (user) {
             email = user.email;
         }
-        console.log(user);
+        //console.log(user);
     });
 
     let name = '';

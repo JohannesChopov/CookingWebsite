@@ -1,7 +1,3 @@
-<svelte:head>
-    <title>About</title>
-</svelte:head>
-
 <div class="about-page">
     <h1 class="bold">My Goal</h1>
     <p>This website is the result of a project for the Full Stack Web Development course. It aims to provide a platform where users can share their own recipes and enjoy recipes shared by others.</p>

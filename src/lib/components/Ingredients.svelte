@@ -34,7 +34,7 @@
             ]);
             search = '';
             searchResults = [];
-            console.log("Ingredients: ", get(ingredientsStore));
+            //console.log("Ingredients: ", get(ingredientsStore));
         }
     };
 

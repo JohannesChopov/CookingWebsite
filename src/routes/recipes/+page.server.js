@@ -7,8 +7,8 @@ export async function load() {
     //const {data, error} = await supabase.from('recipes').select('*');
     const {data, error} = await supabase.from('recipes').select('id, title, description, image_url, user:users (email)');
 
-    console.log("page.server.js:")
-    console.log(data)
+    //console.log("page.server.js:")
+    //console.log(data)
 
     if (error) {
         console.error("Error fetching recipes:", error);

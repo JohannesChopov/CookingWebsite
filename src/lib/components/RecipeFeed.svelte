@@ -4,8 +4,8 @@
     
     export let recipes = [];
 
-    console.log('test');
-    console.log(recipes);
+    //console.log('test');
+    //console.log(recipes);
 
     /*
     const getUser = () => {
@@ -113,7 +113,7 @@
 
 <style>
 
-    
+    /* IN STYLE CSS
 
     @keyframes fadeIn {
         from {
@@ -210,7 +210,7 @@
         color: inherit;
     }
 
-    
+    */
 </style>
 
 

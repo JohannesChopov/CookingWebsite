@@ -27,7 +27,7 @@
     onMount(async () => {
         const data  = localStorage.getItem('userID');
 
-        console.log(data)
+        //console.log(data)
 
         if (data !== null) {
             user_id = data;
@@ -61,8 +61,8 @@
             .eq('id', recipeId)
             .single();
         
-            console.log('Recipe found');
-            console.log(data?.title);
+            //console.log('Recipe found');
+            //console.log(data?.title);
 
         if (searchError) {
             console.error('Error searching image:', searchError)
@@ -83,12 +83,12 @@
                     .delete()
                     .eq('id', recipeId);
 
-                    console.log('Recipe deleted');
+                    //console.log('Recipe deleted');
 
                 if (recipeError) {
                     console.error('Error deleting recipe:', recipeError);
                 } else {
-                    console.log('Recipe and image deleted');
+                    //console.log('Recipe and image deleted');
                     getRecipes(user_id)
                     //recipes = recipes.filter(recipe => recipe.id !== recipeId);
                 }
@@ -110,7 +110,7 @@
         <h1 class="bold">Your Recipes</h1>
         <div class="recipes-grid">
             {#each recipes as { id, title, description, image_url }}
-                <div class="recipe-card">
+                <div class="user-recipe-card">
                     <a href={`/recipes/${id}`}>
                         <div class="recipe-card-image-container">
                             <img class="recipe-card-image" src={image_url} alt={title} />
@@ -139,6 +139,7 @@
 
 
 <style>
+    /*
     .add-recipe-container h1{
         color: var(--prim2);
 
@@ -149,11 +150,13 @@
 
         padding: 2rem;
     }
-
+    
     .user-recipes {
         background-color: var(--prim2);
 
     }
+
+    
 
     .user-recipes h1 {
         color: white;
@@ -166,6 +169,8 @@
         padding: 2rem;
     } 
 
+    
+
     .recipes-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -176,7 +181,9 @@
         padding-bottom: 2rem;
     }
 
-    .recipe-card {
+    
+
+    .user-recipe-card {
         color: var(--prim2);
         background: white;
         border: 1px solid #ccc;
@@ -194,9 +201,10 @@
         box-sizing: border-box;
     }
     
-    .recipe-card:hover {
+    .user-recipe-card:hover {
         transform: translateY(-5px);
     }
+    
 
     .recipe-card-image-container {
         width: 100%;
@@ -251,6 +259,8 @@
         color: inherit;
     }
 
+    
+
     .button-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(0px, 1fr));
@@ -284,5 +294,7 @@
     .edit-button:hover {
         background: darkgreen;
     }
+
+    */
 
 </style>

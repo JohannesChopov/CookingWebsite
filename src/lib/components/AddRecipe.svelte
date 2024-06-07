@@ -35,7 +35,7 @@
     onMount(async () => {
         const data  = localStorage.getItem('userID');
 
-        console.log(data)
+        //console.log(data)
 
         if (data !== null) {
             user_id = data;
@@ -102,7 +102,7 @@
         if (error) {
             console.error('Error adding recipe:', error);
         } else {
-            console.log("Recipe added");
+            //console.log("Recipe added");
             window.location.reload();
         }
     };

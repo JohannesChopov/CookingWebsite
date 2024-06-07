@@ -1,3 +1,4 @@
+
 import { supabase } from '$lib/supabase';
 
 /** @type {import('./$types').LayoutServerLoad} */
