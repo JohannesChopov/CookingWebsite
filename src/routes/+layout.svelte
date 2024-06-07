@@ -1,5 +1,5 @@
 <svelte:head>
-    <title>{"RecipeGram"}</title>
+    <title>RecipeGram</title>
 </svelte:head>
 
 <div class="mainContainer">
@@ -36,9 +36,9 @@
     import {onMount} from 'svelte'
     import { supabase } from '$lib/supabase';
 
-    export let data
+    
 
-    let user
+    
 
     /*
     let { supabase, session} = data
@@ -56,10 +56,13 @@
     })
     */
 
-
+    /*
+    export let data
+    let user
+    
     onMount(async () => {
         const { data: { session } } = await supabase.auth.getSession();
         user = session?.user || null;
     });
-    
+    */
 </script>
