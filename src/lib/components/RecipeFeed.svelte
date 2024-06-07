@@ -112,6 +112,18 @@
 </div>
 
 <style>
+
+    
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
     .recipes-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -135,6 +147,10 @@
 
         max-width: 100%;
         box-sizing: border-box;
+
+        opacity: 0;
+        animation: fadeIn 1s forwards;
+        animation-delay: 0.2s;
     }
     
     .recipe-card:hover {
@@ -193,6 +209,8 @@
         text-decoration: none;
         color: inherit;
     }
+
+    
 </style>
 
 

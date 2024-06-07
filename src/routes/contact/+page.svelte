@@ -99,7 +99,7 @@
     let message = '';
 
     const handleSubmit = () => {
-        const mailtoLink = `mailto:recipient@example.com?subject=Message from ${name}&body=${message} (From: ${email})`;
+        const mailtoLink = `mailto:jchopov10240@gmail.com?subject=Message from ${name}&body=${message} (From: ${email})`;
         window.location.href = mailtoLink;
     };
 </script>
@@ -120,14 +120,15 @@
             <label for="message">Message:</label>
             <textarea id="message" bind:value={message} required></textarea>
 
-            <button type="submit">Send</button>
+            <button type="submit">
+                <i class="fa fa-envelope"></i>
+            </button>
         </form>
     </div>
 </div>
 <div class="links-grid">
-    <p><a class="footerlink" href="contact/contact.html"><i class="fa fa-envelope"></i></a></p>
-    <p><a class="footerlink" href="https://github.com/JohannesChopov"><i class="fa fa-github"></i></a></p>
-    <p><a class="footerlink" href="https://www.linkedin.com/in/johannes-chopov-489b95205/"><i class="fa fa-linkedin"></i>
+    <p><a class="iconlink" href="https://github.com/JohannesChopov" target="_blank" rel="noopener noreferrer"><i class="fa fa-github"></i></a></p>
+    <p><a class="iconlink" href="https://www.linkedin.com/in/johannes-chopov-489b95205/" target="_blank" rel="noopener noreferrer"><i class="fa fa-linkedin"></i>
 </div>
 
 <style>
@@ -139,14 +140,14 @@
         padding: 1rem;
     }
 
-    .footerlink {
+    .iconlink {
         text-decoration: none;
         color: var(--prim2);
         font-size: 1.2rem;
         transition: color 0.3s;
     }
 
-    .footerlink:hover {
+    .iconlink:hover {
         color: gray;
 }
 

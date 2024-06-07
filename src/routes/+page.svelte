@@ -1,5 +1,14 @@
 <script>
     import { onMount } from 'svelte';
+
+    onMount(() => {
+        window.location.href = "/recipes";
+    });
+</script>
+
+<!--
+<script>
+    import { onMount } from 'svelte';
     import { supabase } from '$lib/supabase';
     let user = null;
     /*
@@ -50,3 +59,4 @@
 <a href="/login">{user ? 'Profile' : 'Login'}</a>
 
 <h2> Dit is een voorbeeld website </h2>
+-->

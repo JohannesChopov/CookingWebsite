@@ -4,8 +4,8 @@
     </h1>
     <header class="layout-header">
         <nav>
-            <a href="/">Home</a>
-            <a href="/recipes">Explore Recipes</a>
+            <!--<a href="/">Home</a>-->
+            <a href="/recipes">Explore</a>
             <a href="/login">Profile</a>
             <a href="/contact">Contact</a>
             <a href="/about">About</a>
@@ -18,7 +18,7 @@
         <div class="footer-grid">
             <div id="footer-name" class="bold-italic">RecipeGram</div>
             <div class="footer-link">
-                <a id="contact-link" class="normal" href="/contact">Contact Us</a>
+                <a id="contact-link" class="bold" href="/contact">Contact Us</a>
             </div>
         </div>
     </footer>
