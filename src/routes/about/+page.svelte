@@ -41,7 +41,7 @@
         font-weight: bold;
     }
 
-    h1, h2 {
+    h1 {
         color: var(--prim2);
         margin-bottom: 1rem;
     }

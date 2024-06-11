@@ -57,7 +57,6 @@
 </div>
 
 <style>
-
     .links-grid {
         display: flex;
         justify-content: center;
@@ -74,8 +73,9 @@
 
     .iconlink:hover {
         color: gray;
-}
+    }
 
+/*
     .icons {
         display: flex;
         justify-content: center;
@@ -92,7 +92,7 @@
     .icons a:hover {
         color: var(--sec2);
     }
-
+*/
     .contactpage{
 
         padding: 4rem;

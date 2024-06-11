@@ -64,9 +64,6 @@
 </div>
 
 <style>
-    h2 {
-        color: black;
-    }
     p {
         color: red;
     }
